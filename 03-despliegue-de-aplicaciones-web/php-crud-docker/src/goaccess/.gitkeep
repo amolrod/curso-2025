@@ -1,0 +1,2 @@
+# Crear directorio para reportes de GoAccess
+mkdir -p goaccess
