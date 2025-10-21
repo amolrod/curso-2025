@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # servidor web apache con php
+  web:
+    image: php:8.1-apache
+    container_name: apache-virtualhosts
+    ports:
+      - "9080:80"
+      - "9443:443"
+    volumes:
+      # montamos los sitios web
+      - ./sitio1:/var/www/sitio1
+      - ./sitio2:/var/www/sitio2
+      # configuracion de apache
+      - ./apache-config/virtualhosts.conf:/etc/apache2/sites-available/000-default.conf
+      - ./apache-config/ssl.conf:/etc/apache2/sites-available/default-ssl.conf
+      # certificados ssl
+      - ./ssl:/etc/apache2/ssl
+      # archivo de passwords para autenticacion basica
+      - ./apache-config/.htpasswd:/etc/apache2/.htpasswd
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+    command: >
+      bash -c "
+      apt-get update && apt-get install -y openssl &&
+      docker-php-ext-install mysqli &&
+      a2enmod ssl rewrite headers &&
+      a2ensite default-ssl &&
+      apache2-foreground
+      "
+
+  # base de datos mysql
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: super-secret-password
+      MYSQL_DATABASE: ej_login
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+
+volumes:
+  mysql-data:
+
+networks:
+  app-network:
+    driver: bridge
