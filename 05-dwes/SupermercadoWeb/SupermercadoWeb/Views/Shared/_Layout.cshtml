@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Supermercado</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+        }
+
+            header h1 {
+                margin-bottom: 15px;
+            }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            background-color: #34495e;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+            nav a:hover {
+                background-color: #1abc9c;
+            }
+
+        main {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #34495e;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gestión de Supermercado</h1>
+        <nav>
+            <ul>
+                <li><a asp-controller="Clientes" asp-action="Index">Clientes</a></li>
+                <li><a asp-controller="Productos" asp-action="Index">Productos</a></li>
+                <li><a asp-controller="Productos" asp-action="PorCategoria">Filtrar por Categoría</a></li>
+                <li><a asp-controller="Categorias" asp-action="Index">Categorías</a></li>
+                <li><a asp-controller="Pedidos" asp-action="Index">Pedidos</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+</body>
+</html>
