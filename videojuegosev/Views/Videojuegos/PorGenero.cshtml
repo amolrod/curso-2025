@@ -1,0 +1,78 @@
+﻿@model IEnumerable<videojuegosev.Models.Videojuego>
+
+@{
+    ViewData["Title"] = "Buscar por Género";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p class="mb-4">Filtra los videojuegos por género para encontrar tus favoritos.</p>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="generoId" class="form-label">Selecciona un género:</label>
+                    <select name="generoId" id="generoId" class="form-select" onchange="this.form.submit()">
+                        <option value="">-- Todos los géneros --</option>
+                        @foreach (var genero in ViewBag.Generos)
+                        {
+                            <option value="@genero.Id" selected="@(Context.Request.Query["generoId"] == genero.Id.ToString() ? "selected" : null)">
+                                @genero.Nombre
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model.Any())
+{
+    <div class="alert alert-success" role="alert">
+        Se encontraron @Model.Count() videojuegos.
+    </div>
+
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Título</th>
+                <th>Desarrolladora</th>
+                <th>Fecha Lanzamiento</th>
+                <th>Precio</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Titulo</td>
+                    <td>@item.Desarrolladora.Nombre</td>
+                    <td>@item.FechaLanzamiento.ToString("dd/MM/yyyy")</td>
+                    <td>@item.Precio.ToString("C")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Ver Detalles</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (Context.Request.Query["generoId"].ToString() != "")
+{
+    <div class="alert alert-warning" role="alert">
+        No se encontraron videojuegos para el género seleccionado.
+    </div>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        Por favor, selecciona un género para ver los resultados.
+    </div>
+}

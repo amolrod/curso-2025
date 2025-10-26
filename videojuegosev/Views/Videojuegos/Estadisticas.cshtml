@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Estadísticas";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p class="mb-4">Resumen estadístico de nuestra colección de videojuegos.</p>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Resumen General</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span><strong>Total de Videojuegos:</strong></span>
+                    <span class="badge bg-success fs-5">@ViewBag.TotalJuegos</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span><strong>Precio Promedio:</strong></span>
+                    <span class="text-success fs-5">@ViewBag.PrecioPromedio.ToString("C")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Desarrolladora Más Prolífica</h5>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.DesarrolladoraMasProlifica != null)
+                {
+                    <p><strong>Nombre:</strong> @ViewBag.DesarrolladoraMasProlifica.Nombre</p>
+                    <p><strong>País:</strong> @ViewBag.DesarrolladoraMasProlifica.PaisOrigen</p>
+                    <p><strong>Año de Fundación:</strong> @ViewBag.DesarrolladoraMasProlifica.AñoFundacion</p>
+                    <p class="mb-0">
+                        <strong>Juegos Desarrollados:</strong>
+                        <span class="badge bg-primary fs-6">@ViewBag.DesarrolladoraMasProlifica.Videojuegos.Count</span>
+                    </p>
+                }
+                else
+                {
+                    <p class="text-muted">No hay datos disponibles.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-secondary text-white">
+        <h5 class="mb-0">Distribución por Género</h5>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Género</th>
+                    <th class="text-center">Cantidad de Juegos</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.JuegosPorGenero)
+                {
+                    <tr>
+                        <td>@item.Genero</td>
+                        <td class="text-center">
+                            <span class="badge bg-info">@item.Cantidad</span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Volver al catálogo</a>
+</div>
