@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Eventos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <header class="hero">
+    <h1>Portal de Eventos</h1>
+    <p>Encuentra tu próximo evento</p>
+  </header>
+
+  <section class="filtros">
+    <ion-searchbar 
+      placeholder="Buscar eventos..." 
+      [(ngModel)]="searchText"
+      (ionInput)="buscar($event)">
+    </ion-searchbar>
+    
+    <ion-segment [value]="categoriaSeleccionada" (ionChange)="cambiarCategoria($event)">
+      <ion-segment-button value="todos">
+        <ion-label>Todos</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="musica">
+        <ion-label>Música</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="teatro">
+        <ion-label>Teatro</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="deportes">
+        <ion-label>Deportes</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="tecnologia">
+        <ion-label>Tecnología</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </section>
+
+  <main class="eventos-grid">
+    <article class="evento-card" *ngFor="let evento of eventosFiltrados">
+      <div class="evento-img">
+        <img [src]="evento.imagen" [alt]="evento.titulo">
+      </div>
+      <div class="evento-info">
+        <span class="categoria">{{ evento.categoria | titlecase }}</span>
+        <h3>{{ evento.titulo }}</h3>
+        <p>📅 {{ evento.fecha }}</p>
+        <p>📍 {{ evento.lugar }}</p>
+        <div class="precio">{{ evento.precio }} EUR</div>
+        <ion-button expand="block" routerLink="/reservas">Ver detalles</ion-button>
+      </div>
+    </article>
+
+    <div *ngIf="eventosFiltrados.length === 0" class="sin-resultados">
+      <p>No se encontraron eventos</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Portal de Eventos 2025</p>
+    <nav>
+      <a routerLink="/home">Eventos</a>
+      <a routerLink="/reservas">Reservas</a>
+      <a routerLink="/precios">Precios</a>
+    </nav>
+  </footer>
+</ion-content>

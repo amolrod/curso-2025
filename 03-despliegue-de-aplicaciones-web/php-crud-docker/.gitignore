@@ -1,0 +1,28 @@
+# Logs de Apache
+*.log
+
+# Certificados SSL (si se generan localmente)
+ssl/*.key
+ssl/*.crt
+
+# Datos de MySQL
+db-data/
+
+# Archivos de GoAccess
+src/goaccess/*.html
+
+# IDE
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Composer
+vendor/
+composer.lock
+
+# Variables de entorno
+.env
+.env.local

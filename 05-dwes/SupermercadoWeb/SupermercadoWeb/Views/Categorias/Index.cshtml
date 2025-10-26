@@ -1,0 +1,42 @@
+﻿@model IEnumerable<SupermercadoWeb.Models.Categoria>
+
+@{
+    ViewData["Title"] = "Productos Agrupados por Categoría";
+}
+
+<h2>Productos Agrupados por Categoría</h2>
+
+@foreach (var categoria in Model)
+{
+    <h3>@categoria.Nombre</h3>
+
+    @if (categoria.Productos.Any())
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var producto in categoria.Productos)
+                {
+                    <tr>
+                        <td>@producto.Id</td>
+                        <td>@producto.Nombre</td>
+                        <td>@producto.Precio?.ToString("C")</td>
+                        <td>@producto.Stock</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No hay productos en esta categoría.</p>
+    }
+    <br />
+}

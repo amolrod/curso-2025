@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Precios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <header class="precios-header">
+    <h1>Planes y tarifas</h1>
+    <p>Elige la mejor opción para ti</p>
+  </header>
+
+  <main class="precios-grid">
+    <article class="plan-card" *ngFor="let tarifa of tarifas" [class.destacado]="tarifa.destacado">
+      <div class="etiqueta" *ngIf="tarifa.destacado">Recomendado</div>
+      <h3>{{ tarifa.tipo }}</h3>
+      <div class="precio-principal">{{ tarifa.precio }} EUR</div>
+      <p class="periodo">{{ tarifa.descripcion }}</p>
+      <ul>
+        <li *ngFor="let caracteristica of tarifa.caracteristicas">✓ {{ caracteristica }}</li>
+      </ul>
+      <ion-button expand="block" routerLink="/reservas">Seleccionar</ion-button>
+    </article>
+  </main>
+
+  <section class="ofertas-section">
+    <h2>Ofertas y descuentos especiales</h2>
+    <div class="ofertas-grid">
+      <div class="oferta-card" *ngFor="let oferta of ofertas">
+        <div class="oferta-badge">{{ oferta.descuento }}</div>
+        <h4>{{ oferta.titulo }}</h4>
+        <p>{{ oferta.condicion }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-adicional">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Información de compra</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>✓ Todas las entradas incluyen IVA</p>
+        <p>✓ Cancelación gratuita hasta 48h antes</p>
+        <p>✓ Cambio de fecha sin coste adicional</p>
+        <p>✓ Pago seguro con tarjeta o PayPal</p>
+        <ion-button expand="block" routerLink="/reservas" class="btn-comprar">
+          Comprar ahora
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </section>
+</ion-content>

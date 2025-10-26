@@ -1,0 +1,59 @@
+services:
+  web:
+    build: .
+    container_name: php-apache-crud
+    ports:
+      - "8000:80"
+      - "8443:443"
+      - "7890:7890"  # Puerto para GoAccess
+    volumes:
+      - ./src:/var/www/html
+      - ./apache-config:/etc/apache2/sites-available
+      - ./logs:/var/log/apache2
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=crud_db
+      - MYSQL_USER=crud_user
+      - MYSQL_PASSWORD=crud_password
+    depends_on:
+      - db
+    networks:
+      - crud-network
+
+  db:
+    image: mysql:8.0
+    container_name: mysql-crud
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: crud_db
+      MYSQL_USER: crud_user
+      MYSQL_PASSWORD: crud_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - crud-network
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin-crud
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - crud-network
+
+volumes:
+  db-data:
+
+networks:
+  crud-network:
+    driver: bridge

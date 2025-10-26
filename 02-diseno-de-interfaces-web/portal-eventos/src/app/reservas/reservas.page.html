@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Reservas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section class="reserva-container">
+    
+    <div *ngIf="!reservaEnviada">
+      <article class="lista-eventos">
+        <h2>Eventos disponibles</h2>
+        <div class="evento-item" *ngFor="let evento of eventos">
+          <h4>{{ evento.nombre }}</h4>
+          <p>📅 {{ evento.fecha }}</p>
+          <p class="precio-item">{{ evento.precio }} EUR</p>
+        </div>
+      </article>
+
+      <article class="formulario-reserva">
+        <h2>Formulario de reserva</h2>
+        <form (ngSubmit)="enviarReserva()">
+          <ion-list>
+            <ion-item>
+              <ion-label position="stacked">Evento *</ion-label>
+              <ion-select [(ngModel)]="reserva.eventoId" name="evento" placeholder="Selecciona evento">
+                <ion-select-option [value]="evento.id.toString()" *ngFor="let evento of eventos">
+                  {{ evento.nombre }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Nombre completo *</ion-label>
+              <ion-input 
+                type="text" 
+                [(ngModel)]="reserva.nombre" 
+                name="nombre"
+                placeholder="Tu nombre">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Email *</ion-label>
+              <ion-input 
+                type="email" 
+                [(ngModel)]="reserva.email" 
+                name="email"
+                placeholder="tu@email.com">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Teléfono</ion-label>
+              <ion-input 
+                type="tel" 
+                [(ngModel)]="reserva.telefono" 
+                name="telefono"
+                placeholder="666 777 888">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Cantidad de entradas</ion-label>
+              <ion-input 
+                type="number" 
+                [(ngModel)]="reserva.cantidad" 
+                name="cantidad"
+                min="1" 
+                max="10">
+              </ion-input>
+            </ion-item>
+          </ion-list>
+
+          <div class="resumen" *ngIf="eventoSeleccionado">
+            <h3>Resumen</h3>
+            <p><strong>Evento:</strong> {{ eventoSeleccionado.nombre }}</p>
+            <p><strong>Entradas:</strong> {{ reserva.cantidad }}</p>
+            <p><strong>Precio total:</strong> {{ totalPrecio }} EUR</p>
+          </div>
+
+          <ion-button 
+            expand="block" 
+            type="submit" 
+            [disabled]="!reserva.nombre || !reserva.email || !reserva.eventoId"
+            class="btn-reservar">
+            Confirmar reserva
+          </ion-button>
+        </form>
+      </article>
+    </div>
+
+    <ion-card *ngIf="reservaEnviada" class="confirmacion">
+      <ion-card-header>
+        <ion-card-title>✓ Reserva confirmada</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Gracias {{ reserva.nombre }}, tu reserva ha sido confirmada.</p>
+        <p>Te hemos enviado un email a <strong>{{ reserva.email }}</strong> con los detalles.</p>
+        <p><strong>Evento:</strong> {{ eventoSeleccionado?.nombre }}</p>
+        <p><strong>Entradas:</strong> {{ reserva.cantidad }}</p>
+        <p><strong>Total:</strong> {{ totalPrecio }} EUR</p>
+        <ion-button expand="block" (click)="nuevaReserva()">Nueva reserva</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+  </section>
+</ion-content>

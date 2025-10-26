@@ -1,0 +1,29 @@
+﻿@model IEnumerable<SupermercadoWeb.Models.Pedidos>
+
+@{
+    ViewData["Title"] = "Información de Pedidos";
+}
+
+<h2>Información de Pedidos</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID Pedido</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pedido in Model)
+        {
+            <tr>
+                <td>@pedido.Id</td>
+                <td>@pedido.Cliente?.Nombre</td>
+                <td>@pedido.Fecha?.ToString("dd/MM/yyyy")</td>
+                <td>@pedido.Total?.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>

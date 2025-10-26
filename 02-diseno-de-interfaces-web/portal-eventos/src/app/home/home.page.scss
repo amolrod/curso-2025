@@ -1,0 +1,131 @@
+.hero {
+  background: #3880ff;
+  padding: 30px 20px;
+  text-align: center;
+  color: white;
+
+  h1 {
+    margin: 0 0 10px 0;
+    font-size: 26px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+  }
+}
+
+.filtros {
+  padding: 16px;
+  
+  ion-searchbar {
+    margin-bottom: 12px;
+  }
+}
+
+.eventos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  min-height: 300px;
+}
+
+.sin-resultados {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 18px;
+}
+
+.evento-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .evento-img {
+    height: 160px;
+    background: #3880ff;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .evento-info {
+    padding: 15px;
+
+    .categoria {
+      display: inline-block;
+      padding: 3px 10px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    h3 {
+      margin: 10px 0;
+      font-size: 17px;
+      color: #333;
+    }
+
+    p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .precio {
+      font-size: 20px;
+      font-weight: bold;
+      color: #3880ff;
+      margin: 10px 0;
+    }
+  }
+}
+
+.footer {
+  background: #333;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  margin-top: 30px;
+
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+
+    a {
+      color: white;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .eventos-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 22px;
+  }
+}
