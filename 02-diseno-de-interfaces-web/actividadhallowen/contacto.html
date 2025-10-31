@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Formulario de contacto accesible para The Nightmare Before Christmas">
+    <title>Contacto - The Nightmare Before Christmas</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
+
+    <header role="banner">
+        <div class="container">
+            <h1>🎃 The Nightmare Before Christmas 🎄</h1>
+            <p class="subtitle">Un proyecto accesible sobre la película de Tim Burton</p>
+        </div>
+    </header>
+
+    <nav role="navigation" aria-label="Navegación principal">
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="personajes.html">Personajes</a></li>
+                <li><a href="pelicula.html">La Película</a></li>
+                <li><a href="contacto.html" class="active" aria-current="page">Contacto</a></li>
+            </ul>
+
+            <div class="accessibility-controls" role="toolbar" aria-label="Controles de accesibilidad">
+                <button id="btn-tema" aria-label="Cambiar tema claro/oscuro" title="Cambiar tema">
+                    🌙 Tema
+                </button>
+                <button id="btn-fuente-mas" aria-label="Aumentar tamaño de fuente" title="Aumentar texto">
+                    A+
+                </button>
+                <button id="btn-fuente-menos" aria-label="Disminuir tamaño de fuente" title="Disminuir texto">
+                    A-
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main id="contenido-principal" role="main">
+        <div class="container">
+
+            <section aria-labelledby="titulo-contacto">
+                <h2 id="titulo-contacto">Contáctame</h2>
+                <p class="intro-text">
+                    Si tienes alguna sugerencia, has encontrado algún problema de accesibilidad,
+                    o simplemente quieres hablar sobre la película, rellena el formulario.
+                    He intentado hacerlo lo más accesible posible siguiendo lo que aprendimos en clase.
+                </p>
+
+                <!-- El formulario con todas las medidas de accesibilidad -->
+                <form
+                    id="formulario-contacto"
+                    class="contact-form"
+                    action="#"
+                    method="post"
+                    novalidate
+                    aria-label="Formulario de contacto">
+
+                    <!-- Nombre -->
+                    <div class="form-group">
+                        <label for="nombre">
+                            Nombre <span class="required" aria-label="campo obligatorio">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="nombre"
+                            name="nombre"
+                            required
+                            aria-required="true"
+                            aria-describedby="nombre-ayuda nombre-error"
+                            autocomplete="name">
+                        <small id="nombre-ayuda" class="form-help">
+                            ¿Cómo te llamas?
+                        </small>
+                        <span id="nombre-error" class="error-message" role="alert" aria-live="polite"></span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">
+                            Email <span class="required" aria-label="campo obligatorio">*</span>
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            aria-required="true"
+                            aria-describedby="email-ayuda email-error"
+                            autocomplete="email">
+                        <small id="email-ayuda" class="form-help">
+                            Tu dirección de correo electrónico
+                        </small>
+                        <span id="email-error" class="error-message" role="alert" aria-live="polite"></span>
+                    </div>
+
+                    <!-- Asunto -->
+                    <div class="form-group">
+                        <label for="asunto">
+                            Asunto <span class="required" aria-label="campo obligatorio">*</span>
+                        </label>
+                        <select
+                            id="asunto"
+                            name="asunto"
+                            required
+                            aria-required="true"
+                            aria-describedby="asunto-ayuda asunto-error">
+                            <option value="">-- Selecciona un tema --</option>
+                            <option value="sugerencia">Sugerencia</option>
+                            <option value="accesibilidad">Problema de accesibilidad</option>
+                            <option value="contenido">Sobre el contenido</option>
+                            <option value="pelicula">Hablar de la película</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                        <small id="asunto-ayuda" class="form-help">
+                            Selecciona sobre qué quieres escribir
+                        </small>
+                        <span id="asunto-error" class="error-message" role="alert" aria-live="polite"></span>
+                    </div>
+
+                    <!-- Personaje favorito (opcional) -->
+                    <fieldset class="form-group">
+                        <legend>¿Cuál es tu personaje favorito? (opcional)</legend>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input
+                                    type="radio"
+                                    id="fav-jack"
+                                    name="personaje-favorito"
+                                    value="jack">
+                                <label for="fav-jack">Jack Skellington</label>
+                            </div>
+                            <div class="radio-option">
+                                <input
+                                    type="radio"
+                                    id="fav-sally"
+                                    name="personaje-favorito"
+                                    value="sally">
+                                <label for="fav-sally">Sally</label>
+                            </div>
+                            <div class="radio-option">
+                                <input
+                                    type="radio"
+                                    id="fav-oogie"
+                                    name="personaje-favorito"
+                                    value="oogie">
+                                <label for="fav-oogie">Oogie Boogie</label>
+                            </div>
+                            <div class="radio-option">
+                                <input
+                                    type="radio"
+                                    id="fav-zero"
+                                    name="personaje-favorito"
+                                    value="zero">
+                                <label for="fav-zero">Zero</label>
+                            </div>
+                            <div class="radio-option">
+                                <input
+                                    type="radio"
+                                    id="fav-otro"
+                                    name="personaje-favorito"
+                                    value="otro">
+                                <label for="fav-otro">Otro</label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Mensaje -->
+                    <div class="form-group">
+                        <label for="mensaje">
+                            Mensaje <span class="required" aria-label="campo obligatorio">*</span>
+                        </label>
+                        <textarea
+                            id="mensaje"
+                            name="mensaje"
+                            rows="6"
+                            required
+                            aria-required="true"
+                            aria-describedby="mensaje-ayuda mensaje-error"
+                            minlength="10"
+                            maxlength="1000"></textarea>
+                        <small id="mensaje-ayuda" class="form-help">
+                            Escribe tu mensaje (mínimo 10 caracteres, máximo 1000)
+                        </small>
+                        <span id="mensaje-error" class="error-message" role="alert" aria-live="polite"></span>
+                    </div>
+
+                    <!-- Newsletter (opcional) -->
+                    <div class="form-group checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="newsletter"
+                            name="newsletter">
+                        <label for="newsletter">
+                            Quiero recibir novedades sobre la película y eventos relacionados
+                        </label>
+                    </div>
+
+                    <!-- Política de privacidad -->
+                    <div class="form-group checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="privacidad"
+                            name="privacidad"
+                            required
+                            aria-required="true"
+                            aria-describedby="privacidad-error">
+                        <label for="privacidad">
+                            He leído y acepto la política de privacidad <span class="required" aria-label="campo obligatorio">*</span>
+                        </label>
+                        <span id="privacidad-error" class="error-message" role="alert" aria-live="polite"></span>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="form-actions">
+                        <button
+                            type="submit"
+                            class="btn btn-primary btn-submit"
+                            aria-label="Enviar formulario">
+                            Enviar Mensaje
+                        </button>
+                        <button
+                            type="reset"
+                            class="btn btn-secondary"
+                            aria-label="Limpiar formulario">
+                            Limpiar
+                        </button>
+                    </div>
+
+                    <!-- Mensaje de confirmación (oculto inicialmente) -->
+                    <div id="mensaje-confirmacion" class="success-message" role="alert" aria-live="polite" aria-atomic="true" hidden>
+                        <p>✅ <strong>¡Mensaje enviado con éxito!</strong></p>
+                        <p>Gracias por contactar. Te responderé lo antes posible.</p>
+                    </div>
+
+                </form>
+
+            </section>
+
+            <!-- Información adicional -->
+            <section class="info-section" aria-labelledby="titulo-info">
+                <h2 id="titulo-info">Información sobre Accesibilidad</h2>
+                <p>
+                    Este formulario incluye varias medidas de accesibilidad:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Etiquetas claras:</strong> Cada campo tiene su etiqueta asociada con el atributo
+                        <code>for</code>, para que los lectores de pantalla sepan qué es cada cosa.
+                    </li>
+                    <li>
+                        <strong>Ayudas contextuales:</strong> Los textos pequeños debajo de cada campo dan
+                        información extra sobre qué poner.
+                    </li>
+                    <li>
+                        <strong>Validación accesible:</strong> Los errores se anuncian con <code>role="alert"</code>
+                        y <code>aria-live="polite"</code> para que los lectores de pantalla los detecten.
+                    </li>
+                    <li>
+                        <strong>Navegación por teclado:</strong> Puedes rellenar todo el formulario solo con
+                        el teclado (Tab, Shift+Tab, Espacio, Enter).
+                    </li>
+                    <li>
+                        <strong>Foco visible:</strong> Cuando navegas con teclado, se ve claramente dónde estás.
+                    </li>
+                    <li>
+                        <strong>Campos obligatorios marcados:</strong> Los asteriscos tienen un <code>aria-label</code>
+                        para que se anuncie "campo obligatorio".
+                    </li>
+                </ul>
+            </section>
+
+        </div>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="container">
+            <p>
+                Proyecto realizado por un alumno de 2º DAW - Diseño de Interfaces Web<br>
+                <small>Trabajo sobre accesibilidad web - 2025</small>
+            </p>
+            <p>
+                <small>
+                    Esta página cumple con los estándares WCAG 2.1 nivel AA para accesibilidad web.
+                    Si encuentras algún problema de accesibilidad, por favor usa el
+                    <a href="contacto.html">formulario de contacto</a>.
+                </small>
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/accesibilidad.js"></script>
+    <script src="js/formulario.js"></script>
+</body>
+</html>
+

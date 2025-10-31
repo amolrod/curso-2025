@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Información sobre la película The Nightmare Before Christmas, su historia y vídeo">
+    <title>La Película - The Nightmare Before Christmas</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
+
+    <header role="banner">
+        <div class="container">
+            <h1>🎃 The Nightmare Before Christmas 🎄</h1>
+            <p class="subtitle">Un proyecto accesible sobre la película de Tim Burton</p>
+        </div>
+    </header>
+
+    <nav role="navigation" aria-label="Navegación principal">
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="personajes.html">Personajes</a></li>
+                <li><a href="pelicula.html" class="active" aria-current="page">La Película</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+
+            <div class="accessibility-controls" role="toolbar" aria-label="Controles de accesibilidad">
+                <button id="btn-tema" aria-label="Cambiar tema claro/oscuro" title="Cambiar tema">
+                    🌙 Tema
+                </button>
+                <button id="btn-fuente-mas" aria-label="Aumentar tamaño de fuente" title="Aumentar texto">
+                    A+
+                </button>
+                <button id="btn-fuente-menos" aria-label="Disminuir tamaño de fuente" title="Disminuir texto">
+                    A-
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main id="contenido-principal" role="main">
+        <div class="container">
+
+            <!-- Información de la película -->
+            <section aria-labelledby="titulo-info">
+                <h2 id="titulo-info">Sobre la Película</h2>
+
+                <div class="movie-info-grid">
+                    <article class="info-box">
+                        <h3>📅 Datos Técnicos</h3>
+                        <ul>
+                            <li><strong>Año:</strong> 1993</li>
+                            <li><strong>Director:</strong> Henry Selick</li>
+                            <li><strong>Historia:</strong> Tim Burton</li>
+                            <li><strong>Música:</strong> Danny Elfman</li>
+                            <li><strong>Duración:</strong> 76 minutos</li>
+                            <li><strong>Técnica:</strong> Stop-motion</li>
+                        </ul>
+                    </article>
+
+                    <article class="info-box">
+                        <h3>🏆 Reconocimientos</h3>
+                        <ul>
+                            <li>Nominada al Oscar a Mejores Efectos Visuales</li>
+                            <li>Película de culto con millones de fans</li>
+                            <li>Reestreñada en 3D en 2006</li>
+                            <li>Merchandising que sigue vendiéndose hoy</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Historia de la película -->
+            <section class="story-section" aria-labelledby="titulo-historia">
+                <h2 id="titulo-historia">La Historia</h2>
+
+                <div class="story-content">
+                    <h3>El Descubrimiento</h3>
+                    <p>
+                        Todo empieza cuando Jack Skellington, después de otro Halloween exitoso, se siente
+                        vacío y aburrido. Una noche se adentra en el bosque y descubre unas puertas mágicas
+                        que llevan a diferentes festividades. Intrigado, abre la puerta con forma de árbol
+                        de Navidad y cae en Christmas Town, un mundo de colores, luces y alegría.
+                    </p>
+
+                    <h3>El Plan</h3>
+                    <p>
+                        Fascinado por lo que ha visto, Jack vuelve a Halloween Town decidido a entender qué
+                        es la Navidad. Hace experimentos, lee libros, pero no consigue captar la esencia.
+                        Entonces se le ocurre una idea: ¡él mismo hará la Navidad! Le dice a los habitantes
+                        de Halloween Town que preparen regalos y decoraciones, y manda a Lock, Shock y Barrel
+                        a "invitar" a Santa Claus... pero los niños lo llevan con Oogie Boogie.
+                    </p>
+
+                    <h3>La Noche de Navidad</h3>
+                    <p>
+                        Jack se disfraza de Santa y sale a repartir regalos con Zero y su trineo tirado por
+                        esqueletos de renos. Pero los regalos de Halloween Town son terroríficos: serpientes,
+                        cabezas encogidas, vampiros de juguete... Los niños se asustan y llaman a la policía,
+                        que al final derriba a Jack del cielo pensando que es un invasor.
+                    </p>
+
+                    <h3>El Desenlace</h3>
+                    <p>
+                        Jack cae y se da cuenta de su error: intentó ser algo que no era. Acepta que él es
+                        el Rey de Halloween y eso está bien. Rescata a Santa Claus de Oogie Boogie (con ayuda
+                        de Sally) y Santa arregla la Navidad a tiempo. Al final, Jack y Sally se dan cuenta
+                        de que están hechos el uno para el otro.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Sección de vídeo -->
+            <section class="video-section" aria-labelledby="titulo-video">
+                <h2 id="titulo-video">Tráiler de la Película</h2>
+                <p>
+                    He incluido el tráiler oficial. Para que sea accesible, tiene controles visibles
+                    y puedes navegar por él con el teclado. Si tienes problemas de audición, más abajo
+                    está la transcripción de lo que dice.
+                </p>
+
+                <!--
+                    Video de YouTube - en un proyecto real habría que usar un vídeo con subtítulos
+                    Aquí simulo el iframe de YouTube como ejemplo
+                -->
+                <div class="video-container">
+                    <iframe
+                        width="560"
+                        height="315"
+                        src="https://www.youtube.com/embed/wr6N_hZyBCk"
+                        title="The Nightmare Before Christmas - Tráiler oficial"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                        aria-label="Vídeo del tráiler de The Nightmare Before Christmas">
+                    </iframe>
+                </div>
+
+                <!-- Transcripción para accesibilidad auditiva -->
+                <details class="transcript">
+                    <summary>📝 Ver transcripción del tráiler</summary>
+                    <div class="transcript-content">
+                        <h3>Transcripción del Tráiler</h3>
+                        <p><strong>Narrador:</strong> "'Twas a long time ago, longer now than it seems..."</p>
+                        <p>
+                            <em>[Música: "This is Halloween" comienza a sonar]</em>
+                        </p>
+                        <p><strong>Coro:</strong> "This is Halloween, this is Halloween, pumpkins scream in the dead of night..."</p>
+                        <p><strong>Narrador:</strong> "In a place you've never seen, a time you've never known..."</p>
+                        <p>
+                            <em>[Se ven imágenes de Halloween Town con criaturas terroríficas bailando]</em>
+                        </p>
+                        <p><strong>Jack Skellington:</strong> "There's got to be more to life than scaring people..."</p>
+                        <p>
+                            <em>[Jack descubre Christmas Town lleno de luces y colores]</em>
+                        </p>
+                        <p><strong>Jack:</strong> "What's this? What's this?"</p>
+                        <p><strong>Narrador:</strong> "Disney presenta una historia de Tim Burton..."</p>
+                        <p>
+                            <em>[Imágenes rápidas de Jack preparando la Navidad, el trineo volando, regalos terroríficos]</em>
+                        </p>
+                        <p><strong>Sally:</strong> "Jack, you can't do this!"</p>
+                        <p><strong>Oogie Boogie:</strong> "Well, well, well... what have we here?"</p>
+                        <p><strong>Narrador:</strong> "The Nightmare Before Christmas"</p>
+                        <p>
+                            <em>[La música alcanza su clímax y aparece el título de la película]</em>
+                        </p>
+                    </div>
+                </details>
+            </section>
+
+            <!-- Sección de curiosidades -->
+            <section class="trivia-section" aria-labelledby="titulo-curiosidades">
+                <h2 id="titulo-curiosidades">Curiosidades que Molan</h2>
+                <ul class="trivia-list">
+                    <li>
+                        <strong>3 años de producción:</strong> Cada segundo de película requirió 12 fotogramas,
+                        y cada fotograma se hizo moviendo los muñecos a mano. ¡Una locura!
+                    </li>
+                    <li>
+                        <strong>Tim Burton no dirigió:</strong> Aunque la peli se asocia con él, quien realmente
+                        dirigió fue Henry Selick. Burton estaba ocupado rodando "Batman Returns".
+                    </li>
+                    <li>
+                        <strong>Danny Elfman es Jack:</strong> El compositor no solo hizo la música, sino que
+                        también puso la voz cantada de Jack (la voz hablada es de Chris Sarandon).
+                    </li>
+                    <li>
+                        <strong>400 cabezas de Jack:</strong> Se crearon cientos de cabezas diferentes de Jack
+                        para poder hacer todas las expresiones faciales necesarias.
+                    </li>
+                    <li>
+                        <strong>Sally se desarma 10 veces:</strong> Sally se quita partes del cuerpo o se
+                        descose 10 veces durante toda la película para escapar o ayudar a Jack.
+                    </li>
+                    <li>
+                        <strong>¿Halloween o Navidad?:</strong> Hay debate eterno sobre cuándo verla.
+                        La respuesta correcta es: ¡cuando quieras! Funciona para las dos fiestas.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Legado -->
+            <section class="legacy-section" aria-labelledby="titulo-legado">
+                <h2 id="titulo-legado">El Legado</h2>
+                <p>
+                    Aunque al principio no fue un gran éxito de taquilla, con los años "The Nightmare Before
+                    Christmas" se ha convertido en una película de culto. La puedes encontrar en camisetas,
+                    tazas, figuras coleccionables... incluso hay atracciones en Disneyland decoradas con
+                    temática de la peli.
+                </p>
+                <p>
+                    Es una de esas películas que se puede ver una y otra vez sin cansarte. La música es
+                    increíble, la animación sigue siendo impresionante, y la historia tiene un mensaje bonito
+                    sobre aceptarte a ti mismo.
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="container">
+            <p>
+                Proyecto realizado por un alumno de 2º DAW - Diseño de Interfaces Web<br>
+                <small>Trabajo sobre accesibilidad web - 2025</small>
+            </p>
+            <p>
+                <small>
+                    Esta página cumple con los estándares WCAG 2.1 nivel AA para accesibilidad web.
+                    Si encuentras algún problema de accesibilidad, por favor usa el
+                    <a href="contacto.html">formulario de contacto</a>.
+                </small>
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/accesibilidad.js"></script>
+</body>
+</html>
+

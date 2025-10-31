@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página sobre The Nightmare Before Christmas - Proyecto de accesibilidad web">
+    <title>The Nightmare Before Christmas - Inicio</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <!-- Skip link para ir directo al contenido principal (ayuda a lectores de pantalla) -->
+    <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
+
+    <!-- Header con navegación -->
+    <header role="banner">
+        <div class="container">
+            <h1>🎃 The Nightmare Before Christmas 🎄</h1>
+            <p class="subtitle">Un proyecto accesible sobre la película de Tim Burton</p>
+        </div>
+    </header>
+
+    <!-- Navegación principal -->
+    <nav role="navigation" aria-label="Navegación principal">
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active" aria-current="page">Inicio</a></li>
+                <li><a href="personajes.html">Personajes</a></li>
+                <li><a href="pelicula.html">La Película</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+
+            <!-- Controles de accesibilidad -->
+            <div class="accessibility-controls" role="toolbar" aria-label="Controles de accesibilidad">
+                <button id="btn-tema" aria-label="Cambiar tema claro/oscuro" title="Cambiar tema">
+                    🌙 Tema
+                </button>
+                <button id="btn-fuente-mas" aria-label="Aumentar tamaño de fuente" title="Aumentar texto">
+                    A+
+                </button>
+                <button id="btn-fuente-menos" aria-label="Disminuir tamaño de fuente" title="Disminuir texto">
+                    A-
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main id="contenido-principal" role="main">
+        <div class="container">
+            <!-- Sección de bienvenida -->
+            <section class="hero" aria-labelledby="titulo-hero">
+                <h2 id="titulo-hero">Bienvenido a Halloween Town</h2>
+                <p class="intro-text">
+                    ¿Alguna vez te has preguntado qué pasaría si el Rey de Halloween descubriera la Navidad?
+                    Pues eso es exactamente lo que le pasa a Jack Skellington en esta película de culto de 1993.
+                </p>
+                <p class="intro-text">
+                    Esta página está hecha para que todo el mundo pueda disfrutar de la información sobre la peli,
+                    independientemente de sus capacidades. He intentado hacerla lo más accesible posible
+                    siguiendo lo que hemos visto en clase sobre WCAG y accesibilidad web.
+                </p>
+            </section>
+
+            <!-- Sección sobre Halloween Town -->
+            <section class="about-section" aria-labelledby="titulo-halloween-town">
+                <h2 id="titulo-halloween-town">¿Qué es Halloween Town?</h2>
+                <div class="content-grid">
+                    <article class="info-card">
+                        <h3>🎃 El Pueblo de Halloween</h3>
+                        <p>
+                            Halloween Town es un lugar mágico donde viven todas las criaturas que protagonizan
+                            la noche de Halloween. Aquí encontrarás zombies, brujas, vampiros y todo tipo de
+                            seres espeluznantes que trabajan todo el año para hacer la mejor noche de terror.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>👻 Jack Skellington</h3>
+                        <p>
+                            Jack es el Rey de las Calabazas, el líder de Halloween Town. Pero después de años
+                            haciendo lo mismo, está cansado y busca algo nuevo. Un día descubre la Navidad y
+                            decide... ¡secuestrar a Santa Claus y hacerse cargo él!
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>🎄 El Choque de Mundos</h3>
+                        <p>
+                            La película mezcla dos mundos totalmente opuestos: el oscuro y terrorífico Halloween
+                            con la alegre y luminosa Navidad. Es una historia sobre identidad, amistad y encontrar
+                            tu lugar en el mundo. Además tiene una música increíble compuesta por Danny Elfman.
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Sección de por qué es especial -->
+            <section class="special-section" aria-labelledby="titulo-especial">
+                <h2 id="titulo-especial">¿Por qué es tan especial esta película?</h2>
+                <ul class="special-list">
+                    <li>
+                        <strong>Animación stop-motion:</strong> Cada fotograma está hecho a mano moviendo
+                        muñecos milímetro a milímetro. ¡Tardaron 3 años en hacerla!
+                    </li>
+                    <li>
+                        <strong>Música memorable:</strong> Las canciones de Danny Elfman son súper pegadizas
+                        y ayudan a contar la historia de una forma única.
+                    </li>
+                    <li>
+                        <strong>Estilo visual único:</strong> El diseño de Tim Burton es inconfundible, con
+                        esas formas alargadas y ese toque gótico que mola un montón.
+                    </li>
+                    <li>
+                        <strong>Para todas las edades:</strong> Aunque da un poco de miedo, es una peli familiar
+                        que puedes ver tanto en Halloween como en Navidad.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Call to action -->
+            <section class="cta-section" aria-labelledby="titulo-cta">
+                <h2 id="titulo-cta">Explora más</h2>
+                <p>Descubre más sobre el mundo de Jack Skellington navegando por las diferentes secciones:</p>
+                <div class="cta-buttons">
+                    <a href="personajes.html" class="btn btn-primary">Ver Personajes</a>
+                    <a href="pelicula.html" class="btn btn-secondary">Sobre la Película</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="container">
+            <p>
+                Proyecto realizado por un alumno de 2º DAW - Diseño de Interfaces Web<br>
+                <small>Trabajo sobre accesibilidad web - 2025</small>
+            </p>
+            <p>
+                <small>
+                    Esta página cumple con los estándares WCAG 2.1 nivel AA para accesibilidad web.
+                    Si encuentras algún problema de accesibilidad, por favor usa el
+                    <a href="contacto.html">formulario de contacto</a>.
+                </small>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Script para controles de accesibilidad -->
+    <script src="js/accesibilidad.js"></script>
+</body>
+</html>
+
