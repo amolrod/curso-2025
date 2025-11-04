@@ -1,0 +1,2 @@
+# Placeholder para aplicaciones personalizadas
+# Este directorio se monta en /opt/tomcat/myapps dentro del contenedor

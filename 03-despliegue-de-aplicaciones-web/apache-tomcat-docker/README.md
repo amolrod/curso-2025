@@ -5,12 +5,19 @@
 [![Apache](https://img.shields.io/badge/Apache-D22128?style=for-the-badge&logo=apache&logoColor=white)](https://httpd.apache.org/)
 [![Tomcat](https://img.shields.io/badge/Tomcat-F8DC75?style=for-the-badge&logo=apache-tomcat&logoColor=black)](https://tomcat.apache.org/)
 
+> **⚠️ IMPORTANTE:** Este proyecto tiene **DOS versiones**:
+> - **Versión Principal** (esta carpeta): Arquitectura optimizada con microservicios y protocolo AJP
+> - **[Versión Unificada](./version-unificada/)**: Implementación siguiendo exactamente el documento académico (Apache + Tomcat en un contenedor, proxy HTTP)
+> 
+> 📄 Ver [COMPARATIVA-VERSIONES.md](./COMPARATIVA-VERSIONES.md) para elegir cuál usar
+
 ## 📋 Tabla de Contenidos
 
 - [Descripción del Proyecto](#-descripción-del-proyecto)
 - [Arquitectura](#-arquitectura)
 - [Requisitos Previos](#-requisitos-previos)
 - [Estructura del Proyecto](#-estructura-del-proyecto)
+- [Documentación y Recursos](#-documentación-y-recursos)
 - [Instalación y Configuración](#-instalación-y-configuración)
 - [Uso](#-uso)
 - [Acceso a las Aplicaciones](#-acceso-a-las-aplicaciones)
@@ -27,6 +34,16 @@
 ## 🎯 Descripción del Proyecto
 
 Este proyecto implementa una solución completa de despliegue de aplicaciones web Java utilizando **Docker**, **Apache HTTP Server** y **Apache Tomcat** con comunicación mediante el protocolo **AJP (Apache JServ Protocol)**.
+
+### ⚙️ Arquitectura: Microservicios Optimizada
+
+Esta **versión principal** utiliza:
+- **2 contenedores separados** (Apache + Tomcat)
+- **Protocolo AJP** para comunicación eficiente
+- **Imágenes oficiales de Docker Hub**
+- **Optimización para producción/desarrollo**
+
+> Si necesitas la implementación siguiendo el documento académico paso a paso (Apache + Tomcat en un contenedor con proxy HTTP), ve a **[version-unificada/](./version-unificada/)**
 
 ### Objetivos Cumplidos
 
@@ -145,6 +162,7 @@ apache-tomcat-docker/
 ├── 📄 Dockerfile.apache           # Imagen de Apache HTTP Server
 ├── 📄 Dockerfile.tomcat           # Imagen de Apache Tomcat
 ├── 📄 README.md                   # Esta documentación
+├── 📄 COMPARATIVA-VERSIONES.md    # ⭐ Comparación versión principal vs unificada
 │
 ├── 📁 apache-config/              # Configuración de Apache
 │   └── httpd-vhosts.conf         # Virtual Hosts y proxy config
@@ -155,17 +173,89 @@ apache-tomcat-docker/
 │   └── context.xml               # Configuración de Manager
 │
 ├── 📁 webapp/                     # Aplicaciones web
-│   └── demo/                     # Aplicación de demostración
-│       ├── index.html            # Página principal
-│       ├── info.jsp              # Información del sistema
-│       ├── test.jsp              # Página de pruebas
-│       └── WEB-INF/
-│           └── web.xml           # Descriptor de la aplicación
+│   ├── demo/                     # Aplicación de demostración
+│   │   ├── index.html            # Página principal
+│   │   ├── info.jsp              # Información del sistema
+│   │   ├── test.jsp              # Página de pruebas
+│   │   └── WEB-INF/
+│   │       └── web.xml           # Descriptor de la aplicación
+│   └── Formulario.war            # Aplicación WAR de ejemplo
+│
+├── 📁 documentacion/              # Documentación del proyecto
+│   ├── README.md                 # Índice de documentación
+│   ├── 1_Apache Tomcat.pdf       # Documentación de Tomcat
+│   ├── 1_Apache_Docker_ServidorWeb.pdf   # Documentación de Apache en Docker
+│   ├── 2_Conectar el servidor web Apache a Tomcat mediante un proxy.pdf
+│   ├── Formulario.war            # Aplicación WAR de ejemplo
+│   └── Dockerfile                # Dockerfile alternativo (referencia)
+│
+├── 📁 version-unificada/          # ⭐ VERSIÓN ALTERNATIVA DEL PROYECTO
+│   ├── Dockerfile                # Apache + Tomcat en un contenedor (Ubuntu 20.04)
+│   ├── docker-compose.yml        # Orquestación versión unificada
+│   ├── README.md                 # Documentación completa de esta versión
+│   ├── config/                   # Configuraciones (server.xml, apache2.conf)
+│   ├── scripts/                  # Script de inicio (start.sh)
+│   └── webapp/                   # Aplicaciones (prueba.html, sample/, Formulario.war)
 │
 └── 📁 logs/                       # Logs (generados automáticamente)
     ├── apache/                   # Logs de Apache
     └── tomcat/                   # Logs de Tomcat
 ```
+
+> 📖 **Documentación adicional del proyecto:**
+> - [COMPARATIVA-VERSIONES.md](./COMPARATIVA-VERSIONES.md) - Comparación técnica entre ambas versiones
+> - [version-unificada/README.md](./version-unificada/README.md) - Guía de la versión unificada
+> - Ver sección "Documentación y Recursos" más abajo para PDFs y archivos markdown
+
+---
+
+## 📚 Documentación y Recursos
+
+Este proyecto incluye documentación completa y recursos de referencia en la carpeta `documentacion/`:
+
+### 📄 Documentos PDF de Referencia
+
+| Documento | Descripción |
+|-----------|-------------|
+| **1_Apache Tomcat.pdf** | Documentación técnica sobre Apache Tomcat |
+| **1_Apache_Docker_ServidorWeb.pdf** | Guía de Apache HTTP Server en Docker |
+| **2_Conectar el servidor web Apache a Tomcat mediante un proxy.pdf** | Configuración del proxy Apache-Tomcat |
+
+### 🎯 Aplicación WAR de Ejemplo
+
+**Formulario.war** - Aplicación web Java de ejemplo que demuestra:
+- Formularios HTML
+- Procesamiento Java/JSP
+- Despliegue WAR en Tomcat
+
+**Cómo desplegar Formulario.war:**
+
+```powershell
+# Copiar a webapp/ para despliegue automático
+Copy-Item documentacion\Formulario.war webapp\
+
+# Reiniciar Tomcat
+docker-compose restart tomcat
+
+# Acceder a la aplicación
+# http://localhost/Formulario
+# http://localhost:8080/Formulario
+```
+
+### 📖 Documentación Adicional del Proyecto
+
+| Archivo | Contenido |
+|---------|-----------|
+| **README.md** | Documentación principal (este archivo) |
+| **GUIA-RAPIDA.md** | Inicio rápido en 5 minutos |
+| **INSTRUCCIONES-DESPLIEGUE.md** | Paso a paso detallado |
+| **CHECKLIST.md** | Lista de verificación de requisitos |
+| **RESUMEN-PROYECTO.md** | Resumen ejecutivo |
+| **EVALUACION-PROYECTO.md** | Verificación completa de requisitos |
+| **GUION-VIDEO.md** | Script para vídeo demostrativo |
+| **documentacion/README.md** | Índice de recursos y PDFs |
+
+**💡 Consultar:** Para más detalles sobre los recursos, ver [`documentacion/README.md`](documentacion/README.md)
 
 ---
 
@@ -294,6 +384,15 @@ docker-compose exec tomcat ps aux
 | `http://localhost/demo` | Página principal de la aplicación demo |
 | `http://localhost/demo/info.jsp` | Información detallada del sistema |
 | `http://localhost/demo/test.jsp` | Página de pruebas interactivas |
+
+### Aplicación Formulario (WAR)
+
+| URL | Descripción |
+|-----|-------------|
+| `http://localhost/Formulario` | Aplicación de formulario (vía Apache proxy) |
+| `http://localhost:8080/Formulario` | Acceso directo a Formulario |
+
+> **Nota:** Para desplegar Formulario.war, ver sección [Despliegue de Aplicaciones WAR](#-despliegue-de-aplicaciones-war)
 
 ### Tomcat Manager (vía Apache Proxy)
 

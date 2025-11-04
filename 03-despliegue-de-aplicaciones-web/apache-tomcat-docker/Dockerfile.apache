@@ -1,55 +1,117 @@
 # ==============================================================================
-# Dockerfile para Apache HTTP Server
+# Dockerfile para Apache HTTP Server con PHP
 # ==============================================================================
-# Imagen: httpd:2.4
-# Función: Actuar como reverse proxy hacia Tomcat usando mod_proxy_ajp
+# Imagen base: php:8.2-apache (incluye Apache + PHP)
+# Función: Servidor web con PHP + reverse proxy hacia Tomcat usando AJP
 # Puerto expuesto: 80
 # ==============================================================================
 
-FROM httpd:2.4
+FROM php:8.2-apache
 
 # Etiquetas de metadata
 LABEL maintainer="admin@example.com"
-LABEL description="Apache HTTP Server configurado como reverse proxy para Tomcat"
-LABEL version="1.0"
+LABEL description="Apache HTTP Server con PHP configurado como reverse proxy para Tomcat"
+LABEL version="2.0"
 
-# Instalar herramientas necesarias (opcional - comentado por problemas de conexión)
-# RUN apt-get update && \
-#     apt-get install -y \
-#     curl \
-#     && rm -rf /var/lib/apt/lists/*
+# Instalar herramientas necesarias
+RUN apt-get update && \
+    apt-get install -y \
+    curl \
+    libxml2-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Habilitar módulos necesarios para proxy
-# mod_proxy: Módulo base para funcionalidad de proxy
-# mod_proxy_ajp: Soporte para protocolo AJP (Apache JServ Protocol)
-# mod_proxy_http: Soporte para proxy HTTP (por si se necesita)
-# mod_proxy_balancer: Para balanceo de carga (opcional)
-# mod_rewrite: Para reglas de reescritura de URL
-RUN sed -i \
-    -e 's/^#\(LoadModule proxy_module .*\)/\1/' \
-    -e 's/^#\(LoadModule proxy_ajp_module .*\)/\1/' \
-    -e 's/^#\(LoadModule proxy_http_module .*\)/\1/' \
-    -e 's/^#\(LoadModule proxy_balancer_module .*\)/\1/' \
-    -e 's/^#\(LoadModule slotmem_shm_module .*\)/\1/' \
-    -e 's/^#\(LoadModule rewrite_module .*\)/\1/' \
-    /usr/local/apache2/conf/httpd.conf
+# Habilitar módulos necesarios para proxy y PHP
+RUN a2enmod proxy && \
+    a2enmod proxy_ajp && \
+    a2enmod proxy_http && \
+    a2enmod rewrite && \
+    a2enmod headers
 
 # Copiar configuración personalizada de Apache
-COPY apache-config/httpd-vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf
+COPY apache-config/000-default.conf /etc/apache2/sites-available/000-default.conf
 
-# Habilitar la inclusión de configuración de virtual hosts
-RUN sed -i \
-    -e 's/^#\(Include conf\/extra\/httpd-vhosts.conf\)/\1/' \
-    /usr/local/apache2/conf/httpd.conf
+# Crear página principal
+RUN echo '<!DOCTYPE html>\n\
+<html>\n\
+<head>\n\
+    <title>Apache Server - Página Principal</title>\n\
+    <style>\n\
+        body { font-family: Arial; max-width: 800px; margin: 50px auto; padding: 20px; }\n\
+        h1 { color: #D22128; }\n\
+        .info { background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 10px 0; }\n\
+    </style>\n\
+</head>\n\
+<body>\n\
+    <h1>🚀 Apache HTTP Server con PHP</h1>\n\
+    <div class="info">\n\
+        <h2>Servidor funcionando correctamente</h2>\n\
+        <p><strong>Puerto:</strong> 8080 (host) → 80 (contenedor)</p>\n\
+        <p><strong>Contenedor:</strong> servidorWeb_AM</p>\n\
+    </div>\n\
+    <h2>Enlaces de prueba:</h2>\n\
+    <ul>\n\
+        <li><a href="/prueba.html">Página HTML de prueba</a></li>\n\
+        <li><a href="/prueba.php">Página PHP de prueba</a></li>\n\
+        <li><a href="/demo">Aplicación Demo (proxy a Tomcat)</a></li>\n\
+        <li><a href="/tomcat-demo-proxy">Tomcat Demo Proxy</a></li>\n\
+    </ul>\n\
+</body>\n\
+</html>' > /var/www/html/index.html
 
-# Crear directorio para logs personalizados
-RUN mkdir -p /usr/local/apache2/logs
+# Crear prueba.html
+RUN echo '<!DOCTYPE html>\n\
+<html>\n\
+<head>\n\
+    <title>Prueba HTML</title>\n\
+    <style>\n\
+        body { font-family: Arial; max-width: 800px; margin: 50px auto; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; }\n\
+        .container { background: white; padding: 30px; border-radius: 10px; }\n\
+        h1 { color: #667eea; }\n\
+    </style>\n\
+</head>\n\
+<body>\n\
+    <div class="container">\n\
+        <h1>✅ Página HTML de Prueba</h1>\n\
+        <p>Esta es una página HTML estática servida por Apache.</p>\n\
+        <p><strong>URL:</strong> http://localhost:8080/prueba.html</p>\n\
+        <p><strong>Servidor:</strong> Apache HTTP Server</p>\n\
+        <p><strong>Contenedor:</strong> servidorWeb_AM</p>\n\
+        <hr>\n\
+        <p><a href="/">← Volver al inicio</a></p>\n\
+    </div>\n\
+</body>\n\
+</html>' > /var/www/html/prueba.html
 
-# Exponer puerto 80 para tráfico HTTP
+# Crear prueba.php
+RUN echo '<?php header("Content-Type: text/html; charset=UTF-8"); ?>\n\
+<!DOCTYPE html>\n\
+<html>\n\
+<head>\n\
+    <title>Prueba PHP</title>\n\
+    <style>\n\
+        body { font-family: Arial; max-width: 800px; margin: 50px auto; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 20px; }\n\
+        .container { background: white; padding: 30px; border-radius: 10px; }\n\
+        h1 { color: #f5576c; }\n\
+        .info-box { background: #f8f9fa; padding: 15px; margin: 10px 0; border-left: 4px solid #f5576c; }\n\
+    </style>\n\
+</head>\n\
+<body>\n\
+    <div class="container">\n\
+        <h1>🐘 Página PHP de Prueba</h1>\n\
+        <p><strong>PHP está funcionando!</strong></p>\n\
+        <div class="info-box">\n\
+            <h2>Información del Servidor PHP</h2>\n\
+            <p><strong>Versión de PHP:</strong> <?php echo phpversion(); ?></p>\n\
+            <p><strong>Servidor Web:</strong> <?php echo $_SERVER["SERVER_SOFTWARE"] ?? "N/A"; ?></p>\n\
+        </div>\n\
+        <hr>\n\
+        <p><a href="/">← Volver al inicio</a></p>\n\
+    </div>\n\
+</body>\n\
+</html>' > /var/www/html/prueba.php
+
+# Exponer puerto 80
 EXPOSE 80
 
-# Verificar la sintaxis de configuración antes de iniciar
-RUN httpd -t
-
-# Comando por defecto: iniciar Apache en primer plano
-CMD ["httpd-foreground"]
+# Comando por defecto
+CMD ["apache2-foreground"]

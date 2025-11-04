@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  servidor-unificado:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: apache-tomcat-unificado
+    ports:
+      # Puerto 80 de Apache (mapeado a 8080 del host)
+      - "8080:80"
+      # Puerto 8080 de Tomcat (mapeado a 8081 del host)
+      - "8081:8080"
+      # Puerto 8082 de Tomcat para proxy (mapeado a 8082 del host)
+      - "8082:8082"
+    volumes:
+      # Logs de Apache
+      - ./logs/apache:/var/log/apache2
+      # Logs de Tomcat
+      - ./logs/tomcat:/opt/tomcat/logs
+      # Aplicaciones personalizadas
+      - ./webapp/myapps:/opt/tomcat/myapps
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+      - APACHE_LOG_DIR=/var/log/apache2
+      - APACHE_PID_FILE=/var/run/apache2/apache2.pid
+      - APACHE_LOCK_DIR=/var/lock/apache2
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/prueba.html", "&&", "curl", "-f", "http://localhost:8080/sample/hello.jsp"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  app-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  apache-logs:
+  tomcat-logs:

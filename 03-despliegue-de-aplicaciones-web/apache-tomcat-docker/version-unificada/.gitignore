@@ -1,0 +1,17 @@
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Directorio myapps (generado en runtime)
+webapp/myapps/*
+!webapp/myapps/.gitkeep

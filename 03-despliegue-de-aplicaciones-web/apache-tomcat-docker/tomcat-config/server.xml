@@ -68,6 +68,29 @@ MODIFICACIONES PRINCIPALES:
 
     <!-- 
     ==========================================================================
+    CONECTOR HTTP ADICIONAL (Puerto 8082) - PARA PROXY APACHE
+    ==========================================================================
+    Puerto adicional HTTP para conexión con Apache mediante proxy HTTP
+    Según requisitos del documento académico
+    -->
+    <Connector port="8082" 
+               protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443"
+               maxThreads="150"
+               minSpareThreads="25"
+               maxSpareThreads="75"
+               enableLookups="false"
+               acceptCount="100"
+               proxyPort="80"
+               disableUploadTimeout="true"
+               compression="on"
+               compressionMinSize="2048"
+               compressibleMimeType="text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json"
+               URIEncoding="UTF-8" />
+
+    <!-- 
+    ==========================================================================
     CONECTOR AJP (Puerto 8009) - CONFIGURACIÓN PRINCIPAL PARA APACHE
     ==========================================================================
     Apache JServ Protocol para comunicación eficiente entre Apache y Tomcat

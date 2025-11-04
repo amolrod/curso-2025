@@ -17,8 +17,8 @@ services:
   # APACHE HTTP SERVER (Reverse Proxy)
   # ----------------------------------------------------------------------------
   apache:
-    # Nombre del contenedor
-    container_name: apache-proxy
+    # Nombre del contenedor (con iniciales AM = Angel Molina)
+    container_name: servidorWeb_AM
     
     # Construir desde Dockerfile personalizado
     build:
@@ -31,7 +31,7 @@ services:
     # Puertos expuestos al host
     # Formato: "HOST:CONTAINER"
     ports:
-      - "80:80"      # HTTP - Puerto principal para acceso web
+      - "8080:80"    # Apache HTTP Server (8080 en host → 80 en contenedor)
       # - "443:443"  # HTTPS - Descomentar si se configura SSL
     
     # Volúmenes para persistencia y configuración
@@ -80,8 +80,8 @@ services:
   # APACHE TOMCAT (Servidor de Aplicaciones)
   # ----------------------------------------------------------------------------
   tomcat:
-    # Nombre del contenedor
-    container_name: tomcat-server
+    # Nombre del contenedor (con iniciales AM = Angel Molina)
+    container_name: Tomcat_AM
     
     # Construir desde Dockerfile personalizado
     build:
@@ -95,7 +95,8 @@ services:
     
     # Puertos expuestos
     ports:
-      - "8080:8080"  # HTTP - Acceso directo a Tomcat (útil para debugging)
+      - "8081:8080"  # Acceso directo a Tomcat (puerto 8081 en host)
+      - "8082:8082"  # Puerto proxy adicional para Tomcat
       # Puerto 8009 (AJP) NO se expone al host, solo a la red interna Docker
       # Esto mejora la seguridad
     

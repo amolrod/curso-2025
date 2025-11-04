@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Apache Web Server - Prueba</h1>
+        <p>Esto es una prueba.</p>
+        <p class="success">We made it!!</p>
+        
+        <hr>
+        
+        <h2>Información del Servidor</h2>
+        <p><strong>Servidor:</strong> Apache HTTP Server</p>
+        <p><strong>Puerto:</strong> 80 (mapeado a 8080 en el host)</p>
+        <p><strong>Contenedor:</strong> Ubuntu 20.04</p>
+        
+        <h2>Enlaces de Prueba</h2>
+        <ul>
+            <li><a href="/tomcat-demo-proxy/hello.jsp">Aplicación Sample vía Proxy</a></li>
+            <li><a href="/Formulario">Formulario.war vía Proxy</a></li>
+            <li><a href="/manager">Tomcat Manager vía Proxy</a></li>
+            <li><a href="/examples">Ejemplos de Tomcat vía Proxy</a></li>
+        </ul>
+        
+        <h2>Acceso Directo a Tomcat</h2>
+        <p>Puerto 8081 del host → Puerto 8080 de Tomcat</p>
+        <ul>
+            <li><a href="http://localhost:8081/sample/hello.jsp" target="_blank">Sample (directo)</a></li>
+            <li><a href="http://localhost:8081/Formulario" target="_blank">Formulario (directo)</a></li>
+            <li><a href="http://localhost:8081/manager" target="_blank">Manager (directo)</a></li>
+        </ul>
+    </div>
+</body>
+</html>
