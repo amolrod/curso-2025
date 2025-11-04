@@ -1,0 +1,60 @@
+# ==============================================================================
+# GITIGNORE - Apache Tomcat Docker Project
+# ==============================================================================
+
+# Logs
+logs/
+*.log
+
+# Docker
+.env
+
+# Archivos temporales
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+*.sublime-*
+
+# Backups
+backup/
+*.zip
+*.tar.gz
+
+# Archivos de configuración local
+local-config/
+
+# Aplicaciones WAR (descomentar si no quieres versionar las apps)
+# webapp/*.war
+
+# Node modules (si usas alguna herramienta de build)
+node_modules/
+
+# Java compiled
+*.class
+*.jar
+target/
+build/
+
+# Certificados SSL (NUNCA versionar en repo público)
+*.pem
+*.key
+*.crt
+*.p12
+*.jks
+
+# Datos sensibles
+secrets/
+credentials/

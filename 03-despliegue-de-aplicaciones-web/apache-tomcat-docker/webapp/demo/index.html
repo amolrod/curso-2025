@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo App - Apache Tomcat Docker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border: 1px solid #ddd;
+        }
+
+        .header {
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .success-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #eee;
+            border: 1px solid #ccc;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+
+        .info-section {
+            margin-bottom: 30px;
+        }
+
+        .info-section h2 {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+        }
+
+        .info-item {
+            padding: 12px;
+            background: #fafafa;
+            border-left: 3px solid #333;
+        }
+
+        .info-label {
+            font-weight: 600;
+            font-size: 0.9em;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            color: #666;
+            font-size: 0.9em;
+            word-break: break-all;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            background: white;
+            border: 1px solid #333;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: #333;
+            color: white;
+        }
+
+        .btn-primary {
+            background: #333;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #555;
+            border-color: #555;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 15px;
+            background: #fafafa;
+            border: 1px solid #eee;
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+        }
+
+        .feature-desc {
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Aplicación Demo - Apache Tomcat</h1>
+            <p class="subtitle">Despliegue con Docker, Apache HTTP Server y Tomcat usando protocolo AJP</p>
+            <span class="success-badge">Sistema Operativo</span>
+        </div>
+
+        <div class="info-section">
+            <h2>Información del Sistema</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Servidor:</span>
+                    <span class="info-value" id="serverInfo">Cargando...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Puerto:</span>
+                    <span class="info-value" id="portInfo">Cargando...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Protocolo:</span>
+                    <span class="info-value" id="protocolInfo">Cargando...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Método:</span>
+                    <span class="info-value" id="methodInfo">Cargando...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Path:</span>
+                    <span class="info-value" id="pathInfo">Cargando...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Timestamp:</span>
+                    <span class="info-value" id="timestamp">Cargando...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Características Implementadas</h2>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🐳</div>
+                    <div class="feature-title">Docker</div>
+                    <div class="feature-desc">Contenedores</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🌐</div>
+                    <div class="feature-title">Apache</div>
+                    <div class="feature-desc">Reverse Proxy</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">☕</div>
+                    <div class="feature-title">Tomcat</div>
+                    <div class="feature-desc">App Server</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔗</div>
+                    <div class="feature-title">AJP</div>
+                    <div class="feature-desc">Protocolo</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Enlaces</h2>
+            <div class="button-group">
+                <a href="/manager" class="btn btn-primary" target="_blank">Tomcat Manager</a>
+                <a href="info.jsp" class="btn">Información Detallada</a>
+                <a href="test.jsp" class="btn">Página de Pruebas</a>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <p style="color: #666; font-size: 0.9em; text-align: center;">
+                Proyecto de Despliegue de Aplicaciones Web<br>
+                Apache HTTP Server + Apache Tomcat con protocolo AJP
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Actualizar información de la página
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('serverInfo').textContent = window.location.hostname;
+            document.getElementById('portInfo').textContent = window.location.port || '80';
+            document.getElementById('protocolInfo').textContent = window.location.protocol;
+            document.getElementById('methodInfo').textContent = 'GET';
+            document.getElementById('pathInfo').textContent = window.location.pathname;
+            document.getElementById('timestamp').textContent = new Date().toLocaleString('es-ES');
+        });
+    </script>
+</body>
+</html>

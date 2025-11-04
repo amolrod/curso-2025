@@ -1,0 +1,71 @@
+# ==============================================================================
+# Dockerfile para Apache Tomcat
+# ==============================================================================
+# Imagen: tomcat:10.1-jdk17
+# Función: Servidor de aplicaciones Java para desplegar archivos WAR
+# Puertos expuestos: 8080 (HTTP), 8009 (AJP)
+# ==============================================================================
+
+FROM tomcat:10.1-jdk17
+
+# Etiquetas de metadata
+LABEL maintainer="admin@example.com"
+LABEL description="Apache Tomcat con AJP habilitado y seguridad configurada"
+LABEL version="1.0"
+
+# Variables de entorno para configuración de Tomcat
+ENV CATALINA_HOME=/usr/local/tomcat
+ENV TOMCAT_ADMIN_USER=admin
+ENV TOMCAT_ADMIN_PASSWORD=SecurePassword123!
+ENV TOMCAT_MANAGER_USER=manager
+ENV TOMCAT_MANAGER_PASSWORD=ManagerPass123!
+
+# Instalar herramientas útiles para debugging (opcional - comentado por problemas de conexión)
+# RUN apt-get update && \
+#     apt-get install -y \
+#     curl \
+#     && rm -rf /var/lib/apt/lists/*
+
+# Eliminar aplicaciones por defecto (buena práctica de seguridad)
+# Mantener manager, host-manager y ROOT para administración
+# Copiar aplicaciones necesarias desde webapps.dist
+RUN cp -r $CATALINA_HOME/webapps.dist/manager $CATALINA_HOME/webapps/manager && \
+    cp -r $CATALINA_HOME/webapps.dist/host-manager $CATALINA_HOME/webapps/host-manager && \
+    cp -r $CATALINA_HOME/webapps.dist/ROOT $CATALINA_HOME/webapps/ROOT && \
+    rm -rf $CATALINA_HOME/webapps.dist
+
+# Copiar configuración personalizada de Tomcat
+# server.xml: Configuración principal con conector AJP habilitado
+COPY tomcat-config/server.xml $CATALINA_HOME/conf/server.xml
+
+# tomcat-users.xml: Usuarios y roles para Manager y Host Manager
+COPY tomcat-config/tomcat-users.xml $CATALINA_HOME/conf/tomcat-users.xml
+
+# Crear directorio para aplicaciones personalizadas
+RUN mkdir -p $CATALINA_HOME/webapps-custom
+
+# context.xml: Configuración de contexto para Manager (después de que exista el directorio)
+COPY tomcat-config/context.xml $CATALINA_HOME/webapps/manager/META-INF/context.xml
+
+# Establecer permisos correctos
+RUN chmod 600 $CATALINA_HOME/conf/tomcat-users.xml && \
+    chmod 644 $CATALINA_HOME/conf/server.xml
+
+# Exponer puertos
+# 8080: Puerto HTTP para acceso directo a Tomcat
+# 8009: Puerto AJP para comunicación con Apache
+EXPOSE 8080 8009
+
+# Verificar que Tomcat esté correctamente configurado
+RUN $CATALINA_HOME/bin/configtest.sh || true
+
+# Crear script de healthcheck
+RUN echo '#!/bin/bash\ncurl -f http://localhost:8080/ || exit 1' > /healthcheck.sh && \
+    chmod +x /healthcheck.sh
+
+# Healthcheck para verificar que Tomcat esté funcionando
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+    CMD /healthcheck.sh
+
+# Comando por defecto: iniciar Tomcat
+CMD ["catalina.sh", "run"]

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+================================================================================
+Configuración Principal de Apache Tomcat
+================================================================================
+Archivo: server.xml
+Propósito: Configuración principal del servidor Tomcat incluyendo:
+           - Conectores HTTP y AJP
+           - Engine y Host configuration
+           - Configuración de seguridad
+           
+MODIFICACIONES PRINCIPALES:
+- Conector AJP habilitado en puerto 8009 con secretRequired
+- Conector HTTP en puerto 8080
+- Configuración de seguridad mejorada
+================================================================================
+-->
+
+<Server port="8005" shutdown="SHUTDOWN">
+  <!-- Listener para logging del ciclo de vida del servidor -->
+  <Listener className="org.apache.catalina.startup.VersionLoggerListener" />
+  
+  <!-- Prevenir fugas de memoria al recargar aplicaciones -->
+  <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
+  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
+
+  <!-- Recursos globales para autenticación -->
+  <GlobalNamingResources>
+    <Resource name="UserDatabase" 
+              auth="Container"
+              type="org.apache.catalina.UserDatabase"
+              description="User database for authentication"
+              factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
+              pathname="conf/tomcat-users.xml" />
+  </GlobalNamingResources>
+
+  <!-- 
+  ============================================================================
+  SERVICE PRINCIPAL
+  ============================================================================
+  -->
+  <Service name="Catalina">
+
+    <!-- 
+    ==========================================================================
+    CONECTOR HTTP (Puerto 8080)
+    ==========================================================================
+    Permite acceso directo a Tomcat vía HTTP
+    Útil para:
+    - Desarrollo y pruebas
+    - Acceso directo sin pasar por Apache
+    - Aplicaciones que no requieren proxy
+    -->
+    <Connector port="8080" 
+               protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443"
+               maxThreads="200"
+               minSpareThreads="10"
+               enableLookups="false"
+               acceptCount="100"
+               compression="on"
+               compressionMinSize="2048"
+               compressibleMimeType="text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json"
+               URIEncoding="UTF-8" />
+
+    <!-- 
+    ==========================================================================
+    CONECTOR AJP (Puerto 8009) - CONFIGURACIÓN PRINCIPAL PARA APACHE
+    ==========================================================================
+    Apache JServ Protocol para comunicación eficiente entre Apache y Tomcat
+    
+    PARÁMETROS IMPORTANTES:
+    - port: Puerto de escucha (8009 es el estándar)
+    - protocol: Debe ser AJP/1.3
+    - secretRequired: false para simplificar en desarrollo
+                     true en producción con secret="tu-secreto"
+    - address: 0.0.0.0 permite conexiones desde cualquier IP
+              En producción, limitar a IP específica del proxy
+    
+    SEGURIDAD EN PRODUCCIÓN:
+    - Cambiar secretRequired="true"
+    - Añadir atributo secret="UnSecreto MuySeguro123!"
+    - Configurar address para limitar IPs permitidas
+    - El mismo secret debe configurarse en Apache con:
+      ProxyPass ... secret=UnSecretoMuySeguro123!
+    -->
+    <Connector port="8009" 
+               protocol="AJP/1.3"
+               address="0.0.0.0"
+               secretRequired="false"
+               redirectPort="8443"
+               maxThreads="200"
+               minSpareThreads="10"
+               enableLookups="false"
+               acceptCount="100"
+               connectionTimeout="20000"
+               URIEncoding="UTF-8"
+               packetSize="65536" />
+    
+    <!-- 
+    EJEMPLO DE CONFIGURACIÓN SEGURA PARA PRODUCCIÓN:
+    
+    <Connector port="8009" 
+               protocol="AJP/1.3"
+               address="172.18.0.10"
+               secretRequired="true"
+               secret="MiSecretoSuperSeguro2024!@#"
+               redirectPort="8443"
+               maxThreads="200"
+               enableLookups="false"
+               URIEncoding="UTF-8" />
+    
+    Y en Apache httpd-vhosts.conf:
+    ProxyPass /app ajp://tomcat:8009/app secret=MiSecretoSuperSeguro2024!@#
+    -->
+
+    <!-- 
+    ==========================================================================
+    CONECTOR HTTPS (Puerto 8443) - OPCIONAL
+    ==========================================================================
+    Descomenta para habilitar HTTPS directo en Tomcat
+    Requiere certificado SSL/TLS
+    
+    <Connector port="8443" 
+               protocol="org.apache.coyote.http11.Http11NioProtocol"
+               maxThreads="150" 
+               SSLEnabled="true"
+               scheme="https" 
+               secure="true"
+               clientAuth="false" 
+               sslProtocol="TLS">
+      <SSLHostConfig>
+        <Certificate certificateKeystoreFile="conf/localhost-rsa.jks"
+                     type="RSA" />
+      </SSLHostConfig>
+    </Connector>
+    -->
+
+    <!-- 
+    ==========================================================================
+    ENGINE - Motor de procesamiento de servlets
+    ==========================================================================
+    -->
+    <Engine name="Catalina" defaultHost="localhost">
+
+      <!-- 
+      Realm para autenticación de usuarios
+      Usa el UserDatabase definido en GlobalNamingResources
+      -->
+      <Realm className="org.apache.catalina.realm.LockOutRealm">
+        <!-- Previene ataques de fuerza bruta -->
+        <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+               resourceName="UserDatabase"/>
+      </Realm>
+
+      <!-- 
+      ========================================================================
+      HOST - Configuración del host virtual
+      ========================================================================
+      -->
+      <Host name="localhost"  
+            appBase="webapps"
+            unpackWARs="true" 
+            autoDeploy="true">
+
+        <!-- 
+        Valve para logging de accesos
+        Formato: combined (Apache-style)
+        -->
+        <Valve className="org.apache.catalina.valves.AccessLogValve" 
+               directory="logs"
+               prefix="localhost_access_log" 
+               suffix=".txt"
+               pattern="%h %l %u %t &quot;%r&quot; %s %b &quot;%{Referer}i&quot; &quot;%{User-Agent}i&quot;" />
+
+        <!-- 
+        Remote IP Valve - IMPORTANTE para proxy
+        Configura la IP real del cliente cuando se usa detrás de un proxy
+        -->
+        <Valve className="org.apache.catalina.valves.RemoteIpValve"
+               remoteIpHeader="x-forwarded-for"
+               proxiesHeader="x-forwarded-by"
+               protocolHeader="x-forwarded-proto" />
+
+        <!-- 
+        Valve de seguridad - Opcional
+        Previene ataques CSRF y clickjacking
+        
+        <Valve className="org.apache.catalina.valves.CrawlerSessionManagerValve"
+               crawlerUserAgents=".*[bB]ot.*|.*Yahoo! Slurp.*|.*Googlebot.*" />
+        -->
+
+      </Host>
+    </Engine>
+  </Service>
+</Server>
+
+<!--
+================================================================================
+NOTAS IMPORTANTES Y MEJORES PRÁCTICAS
+================================================================================
+
+1. CONECTORES:
+   - HTTP (8080): Acceso directo a Tomcat
+   - AJP (8009): Comunicación con Apache (más eficiente que HTTP)
+   - HTTPS (8443): Cifrado SSL/TLS (opcional, mejor manejarlo en Apache)
+
+2. SEGURIDAD DEL CONECTOR AJP:
+   a) Desarrollo:
+      secretRequired="false" - Más simple para pruebas
+   
+   b) Producción:
+      secretRequired="true"
+      secret="TuSecretoAqui"
+      address="IP-del-Apache" - Limita acceso por IP
+   
+   c) Firewall:
+      - Bloquear puerto 8009 desde Internet
+      - Solo permitir conexiones desde Apache
+
+3. PERFORMANCE:
+   - maxThreads: Número máximo de hilos (ajustar según carga)
+   - acceptCount: Cola de conexiones en espera
+   - compression: Comprime respuestas (ahorra ancho de banda)
+   - connectionTimeout: Tiempo máximo de inactividad
+
+4. LOGGING:
+   - AccessLogValve: Registra todos los accesos
+   - RemoteIpValve: Captura IP real del cliente detrás del proxy
+   - Logs se guardan en $CATALINA_HOME/logs/
+
+5. DESPLIEGUE DE APLICACIONES:
+   - unpackWARs="true": Descomprime archivos WAR automáticamente
+   - autoDeploy="true": Despliega aplicaciones automáticamente
+   - Colocar archivos .war en $CATALINA_HOME/webapps/
+
+6. CONTEXTS:
+   - Cada aplicación tiene su propio Context
+   - Configuración específica en META-INF/context.xml
+   - O en $CATALINA_HOME/conf/Catalina/localhost/nombreapp.xml
+
+7. TROUBLESHOOTING:
+   - Ver logs en: $CATALINA_HOME/logs/catalina.out
+   - Verificar conectividad AJP: telnet localhost 8009
+   - Test de configuración: $CATALINA_HOME/bin/configtest.sh
+
+8. MONITORIZACIÓN:
+   - JMX habilitado por defecto
+   - Acceso vía JConsole o VisualVM
+   - Manager app proporciona métricas en tiempo real
+
+================================================================================
+-->

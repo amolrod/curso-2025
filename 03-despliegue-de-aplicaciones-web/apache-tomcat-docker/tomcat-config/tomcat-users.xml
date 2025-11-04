@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+================================================================================
+Configuración de Usuarios y Roles de Apache Tomcat
+================================================================================
+Archivo: tomcat-users.xml
+Propósito: Definir usuarios, contraseñas y roles para acceso a:
+           - Tomcat Manager (gestión de aplicaciones)
+           - Host Manager (gestión de virtual hosts)
+           - Aplicaciones personalizadas
+           
+IMPORTANTE: En producción, usa contraseñas seguras y considera usar JDBC Realm
+            o JNDI Realm para autenticación contra base de datos/LDAP
+================================================================================
+-->
+
+<tomcat-users xmlns="http://tomcat.apache.org/xml"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
+              version="1.0">
+
+<!--
+================================================================================
+DESCRIPCIÓN DE ROLES PRINCIPALES
+================================================================================
+
+ROLES DE TOMCAT MANAGER:
+- manager-gui: Acceso a interfaz HTML de Manager (navegador web)
+- manager-script: Acceso programático vía HTTP (scripts, ant, maven)
+- manager-jmx: Acceso JMX para monitorización
+- manager-status: Ver información de estado del servidor
+
+ROLES DE HOST MANAGER:
+- admin-gui: Acceso a interfaz HTML de Host Manager
+- admin-script: Acceso programático para gestión de hosts
+
+ROLES PERSONALIZADOS:
+- Puedes definir roles personalizados para tus aplicaciones
+================================================================================
+-->
+
+  <!-- 
+  ============================================================================
+  USUARIO ADMINISTRADOR COMPLETO
+  ============================================================================
+  Usuario con todos los privilegios para Manager y Host Manager
+  -->
+  <role rolename="manager-gui"/>
+  <role rolename="manager-script"/>
+  <role rolename="manager-jmx"/>
+  <role rolename="manager-status"/>
+  <role rolename="admin-gui"/>
+  <role rolename="admin-script"/>
+  
+  <user username="admin" 
+        password="SecurePassword123!" 
+        roles="manager-gui,manager-script,manager-jmx,manager-status,admin-gui,admin-script"/>
+
+  <!-- 
+  ============================================================================
+  USUARIO MANAGER (Solo gestión de aplicaciones)
+  ============================================================================
+  Usuario con privilegios limitados a la gestión de aplicaciones
+  -->
+  <user username="manager" 
+        password="ManagerPass123!" 
+        roles="manager-gui,manager-script,manager-status"/>
+
+  <!-- 
+  ============================================================================
+  USUARIO DEPLOYER (Solo despliegue)
+  ============================================================================
+  Usuario especializado para CI/CD y despliegue automatizado
+  -->
+  <role rolename="deployer"/>
+  <user username="deployer" 
+        password="DeployPass123!" 
+        roles="manager-script"/>
+
+  <!-- 
+  ============================================================================
+  USUARIO MONITOR (Solo lectura)
+  ============================================================================
+  Usuario para monitorización sin capacidad de modificación
+  -->
+  <user username="monitor" 
+        password="MonitorPass123!" 
+        roles="manager-status,manager-jmx"/>
+
+  <!-- 
+  ============================================================================
+  EJEMPLOS DE USUARIOS PERSONALIZADOS PARA APLICACIONES
+  ============================================================================
+  -->
+  
+  <!-- Roles personalizados para aplicación de ejemplo -->
+  <role rolename="app-user"/>
+  <role rolename="app-admin"/>
+  
+  <!-- Usuario normal de aplicación -->
+  <user username="appuser" 
+        password="UserPass123!" 
+        roles="app-user"/>
+  
+  <!-- Administrador de aplicación -->
+  <user username="appadmin" 
+        password="AdminPass123!" 
+        roles="app-user,app-admin"/>
+
+</tomcat-users>
+
+<!--
+================================================================================
+MEJORES PRÁCTICAS DE SEGURIDAD
+================================================================================
+
+1. CONTRASEÑAS:
+   - Usar contraseñas complejas (mínimo 12 caracteres)
+   - Combinar mayúsculas, minúsculas, números y símbolos
+   - NO usar contraseñas por defecto en producción
+   - Cambiar contraseñas regularmente
+
+2. PERMISOS DE ARCHIVO:
+   - chmod 600 tomcat-users.xml (solo lectura para propietario)
+   - chown tomcat:tomcat tomcat-users.xml
+
+3. AUTENTICACIÓN AVANZADA:
+   - Para producción, considerar:
+     * JNDIRealm (LDAP/Active Directory)
+     * DataSourceRealm (Base de datos)
+     * JAASRealm (Java Authentication and Authorization Service)
+
+4. ACCESO REMOTO:
+   - Limitar acceso a Manager/Host Manager por IP
+   - Usar firewall para restringir puerto 8080
+   - Acceder solo a través de Apache proxy con autenticación adicional
+   - Considerar usar VPN para acceso administrativo
+
+5. AUDITORÍA:
+   - Habilitar logging de accesos
+   - Revisar logs regularmente
+   - Implementar alertas para intentos fallidos de login
+
+6. CIFRADO:
+   - Las contraseñas aquí están en texto plano
+   - Tomcat soporta digests MD5/SHA
+   - Ejemplo: <user username="admin" password="<digest>" />
+   - Generar digest: $CATALINA_HOME/bin/digest.sh -a SHA-512 password
+
+EJEMPLO DE USO DE DIGEST:
+Para generar hash de contraseña:
+$ docker exec tomcat /usr/local/tomcat/bin/digest.sh -a SHA-512 MiPassword
+
+Luego en tomcat-users.xml:
+<user username="admin" password="<hash-generado>" />
+
+Y en server.xml:
+<Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+       digest="SHA-512"
+       .../>
+
+================================================================================
+-->

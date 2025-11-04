@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+================================================================================
+Configuración de Context para Tomcat Manager
+================================================================================
+Archivo: context.xml
+Ubicación: webapps/manager/META-INF/context.xml
+Propósito: Controlar el acceso a Tomcat Manager Application
+
+IMPORTANTE: Por defecto, Tomcat Manager solo permite acceso desde localhost.
+            Este archivo permite acceso desde cualquier IP, lo cual es NECESARIO
+            cuando Tomcat está en Docker y se accede a través de Apache proxy.
+
+SEGURIDAD: En producción, limita el acceso por IP o usa autenticación adicional.
+================================================================================
+-->
+
+<Context antiResourceLocking="false" privileged="true">
+  
+  <!-- 
+  ============================================================================
+  CONTROL DE ACCESO POR IP
+  ============================================================================
+  
+  Por defecto, Tomcat Manager tiene esta configuración que solo permite
+  acceso desde localhost (127.0.0.1):
+  
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
+  
+  OPCIONES:
+  
+  1) PERMITIR TODO (Desarrollo/Docker):
+     - Comentar o eliminar el Valve
+     - Útil cuando se accede a través de proxy
+     - SOLO PARA DESARROLLO
+  
+  2) PERMITIR IPs ESPECÍFICAS (Producción):
+     - Descomentar y configurar el Valve
+     - Añadir IPs permitidas con expresiones regulares
+     - Ejemplo: allow="127\.\d+\.\d+\.\d+|192\.168\.1\.\d+|172\.18\.0\.\d+"
+  
+  3) DENEGAR IPs ESPECÍFICAS:
+     - Usar atributo "deny" en lugar de "allow"
+     - Ejemplo: deny="10\.\d+\.\d+\.\d+"
+  -->
+  
+  <!-- 
+  CONFIGURACIÓN PARA DESARROLLO (Acceso desde cualquier IP)
+  Comenta la siguiente línea en producción
+  -->
+  <!-- RemoteAddrValve comentado para permitir acceso desde Docker/Proxy -->
+  
+  <!-- 
+  CONFIGURACIÓN PARA PRODUCCIÓN (Solo IPs específicas)
+  Descomenta y ajusta según tu red
+  -->
+  <!--
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1|172\.18\.0\.\d+|192\.168\.\d+\.\d+" />
+  -->
+  
+  <!-- 
+  ============================================================================
+  CONFIGURACIÓN DE RECURSOS
+  ============================================================================
+  -->
+  
+  <!-- 
+  CookieProcessor: Configuración de cookies de sesión
+  SameSite=strict: Protección contra CSRF
+  -->
+  <CookieProcessor className="org.apache.tomcat.util.http.Rfc6265CookieProcessor"
+                   sameSiteCookies="strict" />
+  
+  <!-- 
+  ============================================================================
+  MANAGER ESPECÍFICO
+  ============================================================================
+  Manager de sesiones para la aplicación Manager
+  -->
+  <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
+
+</Context>
+
+<!--
+================================================================================
+NOTAS ADICIONALES DE SEGURIDAD
+================================================================================
+
+1. ACCESO A TRAVÉS DE PROXY (Docker):
+   - Cuando Tomcat está en Docker detrás de Apache
+   - La IP vista por Tomcat es la del contenedor Apache, no la del cliente
+   - Por eso, RemoteAddrValve debe permitir la red Docker (ej: 172.18.0.0/16)
+   - O comentar RemoteAddrValve y confiar en la autenticación de tomcat-users.xml
+
+2. AUTENTICACIÓN MULTINIVEL:
+   - Nivel 1: tomcat-users.xml (usuario/contraseña)
+   - Nivel 2: RemoteAddrValve (restricción por IP)
+   - Nivel 3: Apache proxy con autenticación adicional
+   - Nivel 4: Firewall/VPN para acceso administrativo
+
+3. MEJORES PRÁCTICAS:
+   - NO exponer puerto 8080 a Internet
+   - Acceder a Manager solo vía Apache proxy
+   - Usar HTTPS en Apache para cifrar credenciales
+   - Implementar rate limiting en Apache
+   - Monitorizar intentos de acceso fallidos
+
+4. CONFIGURACIÓN PARA DIFERENTES ENTORNOS:
+
+   DESARROLLO:
+   - RemoteAddrValve comentado o muy permisivo
+   - Contraseñas simples OK
+   - Acceso desde red local
+
+   STAGING:
+   - RemoteAddrValve con red interna
+   - Contraseñas medias
+   - Acceso solo desde IPs de la empresa
+
+   PRODUCCIÓN:
+   - RemoteAddrValve muy restrictivo
+   - Contraseñas muy fuertes
+   - Acceso solo vía VPN
+   - 2FA si es posible
+   - Auditoría de accesos
+
+5. OTRAS APLICACIONES:
+   - El mismo archivo context.xml puede copiarse a:
+     * webapps/host-manager/META-INF/context.xml
+     * Cualquier otra app que requiera restricción de acceso
+
+6. DEBUGGING:
+   - Si no puedes acceder a Manager, revisa:
+     * Logs en $CATALINA_HOME/logs/localhost.log
+     * Configuración de RemoteAddrValve
+     * Usuarios en tomcat-users.xml
+     * Proxy configuration en Apache
+
+EJEMPLO DE EXPRESIONES REGULARES PARA allow:
+- Localhost: 127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1
+- Red privada clase C: 192\.168\.1\.\d+
+- Red privada clase B: 172\.16\.\d+\.\d+
+- Red privada clase A: 10\.\d+\.\d+\.\d+
+- Red Docker default: 172\.17\.0\.\d+
+- Múltiples redes: 127\.\d+\.\d+\.\d+|192\.168\.1\.\d+|10\.0\.0\.\d+
+
+================================================================================
+-->

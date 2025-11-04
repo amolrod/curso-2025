@@ -1,0 +1,274 @@
+# ==============================================================================
+# Docker Compose - Apache HTTP Server + Apache Tomcat
+# ==============================================================================
+# Versión: 3.8
+# Propósito: Orquestar servicios Apache y Tomcat con comunicación AJP
+# Arquitectura: Apache (puerto 80) -> AJP -> Tomcat (puerto 8009)
+# ==============================================================================
+
+version: '3.8'
+
+# ==============================================================================
+# SERVICIOS
+# ==============================================================================
+services:
+
+  # ----------------------------------------------------------------------------
+  # APACHE HTTP SERVER (Reverse Proxy)
+  # ----------------------------------------------------------------------------
+  apache:
+    # Nombre del contenedor
+    container_name: apache-proxy
+    
+    # Construir desde Dockerfile personalizado
+    build:
+      context: .
+      dockerfile: Dockerfile.apache
+    
+    # Política de reinicio: siempre reiniciar si el contenedor se detiene
+    restart: unless-stopped
+    
+    # Puertos expuestos al host
+    # Formato: "HOST:CONTAINER"
+    ports:
+      - "80:80"      # HTTP - Puerto principal para acceso web
+      # - "443:443"  # HTTPS - Descomentar si se configura SSL
+    
+    # Volúmenes para persistencia y configuración
+    volumes:
+      # Configuración de virtual hosts (solo lectura)
+      - ./apache-config/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf:ro
+      
+      # Logs persistentes en el host
+      - ./logs/apache:/usr/local/apache2/logs
+      
+      # Directorio para contenido estático (opcional)
+      # - ./htdocs:/usr/local/apache2/htdocs
+    
+    # Variables de entorno
+    environment:
+      - TZ=Europe/Madrid
+      - APACHE_LOG_LEVEL=warn
+    
+    # Redes a las que se conecta este servicio
+    networks:
+      - app-network
+    
+    # Dependencias: Apache debe iniciarse después de Tomcat
+    depends_on:
+      - tomcat
+    
+    # Healthcheck para verificar que Apache está funcionando
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    
+    # Límites de recursos (opcional pero recomendado)
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+  # ----------------------------------------------------------------------------
+  # APACHE TOMCAT (Servidor de Aplicaciones)
+  # ----------------------------------------------------------------------------
+  tomcat:
+    # Nombre del contenedor
+    container_name: tomcat-server
+    
+    # Construir desde Dockerfile personalizado
+    build:
+      context: .
+      dockerfile: Dockerfile.tomcat
+      args:
+        - TOMCAT_VERSION=10.1
+    
+    # Política de reinicio
+    restart: unless-stopped
+    
+    # Puertos expuestos
+    ports:
+      - "8080:8080"  # HTTP - Acceso directo a Tomcat (útil para debugging)
+      # Puerto 8009 (AJP) NO se expone al host, solo a la red interna Docker
+      # Esto mejora la seguridad
+    
+    # Volúmenes
+    volumes:
+      # Configuración de Tomcat
+      - ./tomcat-config/server.xml:/usr/local/tomcat/conf/server.xml:ro
+      - ./tomcat-config/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml:ro
+      - ./tomcat-config/context.xml:/usr/local/tomcat/webapps/manager/META-INF/context.xml:ro
+      
+      # Directorio para aplicaciones WAR
+      # NOTA: No montamos todo /webapps para no sobrescribir manager y host-manager
+      # Solo montamos aplicaciones específicas
+      - ./webapp/demo:/usr/local/tomcat/webapps/demo
+      
+      # Logs persistentes
+      - ./logs/tomcat:/usr/local/tomcat/logs
+      
+      # Persistencia de aplicaciones desplegadas (opcional)
+      # - tomcat-webapps:/usr/local/tomcat/webapps
+    
+    # Variables de entorno
+    environment:
+      # Configuración de Java
+      - JAVA_OPTS=-Xms512m -Xmx1024m -XX:+UseG1GC
+      
+      # Zona horaria
+      - TZ=Europe/Madrid
+      
+      # Variables personalizadas (se usan en Dockerfile)
+      - CATALINA_OPTS=-Dfile.encoding=UTF-8
+      
+      # Usuarios de Tomcat (mejor usar tomcat-users.xml)
+      - TOMCAT_ADMIN_USER=admin
+      - TOMCAT_ADMIN_PASSWORD=SecurePassword123!
+    
+    # Redes
+    networks:
+      - app-network
+    
+    # Healthcheck definido en Dockerfile
+    # También podemos sobrescribirlo aquí si es necesario
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
+    
+    # Límites de recursos
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+
+# ==============================================================================
+# REDES
+# ==============================================================================
+networks:
+  # Red personalizada para comunicación entre contenedores
+  app-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        # Subred personalizada (opcional)
+        - subnet: 172.20.0.0/16
+    # Etiquetas para identificar la red
+    labels:
+      - "project=apache-tomcat"
+      - "environment=development"
+
+# ==============================================================================
+# VOLÚMENES NOMBRADOS (Opcional)
+# ==============================================================================
+# Usar volúmenes nombrados para datos que deben persistir entre recreaciones
+# Descomentar si necesitas volúmenes nombrados en lugar de bind mounts
+#
+# volumes:
+#   tomcat-webapps:
+#     driver: local
+#     labels:
+#       - "project=apache-tomcat"
+#   
+#   apache-logs:
+#     driver: local
+#   tomcat-logs:
+#     driver: local
+
+# ==============================================================================
+# COMANDOS ÚTILES
+# ==============================================================================
+#
+# CONSTRUCCIÓN Y DESPLIEGUE:
+# --------------------------
+# Construir imágenes:
+#   docker-compose build
+#
+# Iniciar servicios:
+#   docker-compose up -d
+#
+# Ver logs:
+#   docker-compose logs -f
+#   docker-compose logs -f apache
+#   docker-compose logs -f tomcat
+#
+# Detener servicios:
+#   docker-compose stop
+#
+# Detener y eliminar contenedores:
+#   docker-compose down
+#
+# Reconstruir y reiniciar:
+#   docker-compose up -d --build
+#
+# Ver estado de servicios:
+#   docker-compose ps
+#
+# Ejecutar comando en contenedor:
+#   docker-compose exec apache bash
+#   docker-compose exec tomcat bash
+#
+# Ver uso de recursos:
+#   docker stats
+#
+# DESPLIEGUE DE APLICACIÓN WAR:
+# ------------------------------
+# 1. Copiar archivo .war a ./webapp/
+#    cp miapp.war webapp/
+#
+# 2. Tomcat lo desplegará automáticamente
+#
+# 3. Acceder vía Apache:
+#    http://localhost/miapp
+#
+# ACCESO A INTERFACES ADMINISTRATIVAS:
+# ------------------------------------
+# Tomcat Manager (vía Apache):
+#   http://localhost/manager
+#   Usuario: admin
+#   Contraseña: SecurePassword123!
+#
+# Tomcat directo (puerto 8080):
+#   http://localhost:8080/manager
+#
+# TROUBLESHOOTING:
+# ----------------
+# Ver logs de Apache:
+#   docker-compose exec apache tail -f /usr/local/apache2/logs/error.log
+#
+# Ver logs de Tomcat:
+#   docker-compose exec tomcat tail -f /usr/local/tomcat/logs/catalina.out
+#
+# Verificar conectividad AJP desde Apache:
+#   docker-compose exec apache nc -zv tomcat 8009
+#
+# Reiniciar solo un servicio:
+#   docker-compose restart apache
+#   docker-compose restart tomcat
+#
+# Rebuild de un solo servicio:
+#   docker-compose up -d --build apache
+#
+# LIMPIEZA:
+# ---------
+# Eliminar todo (contenedores, redes, volúmenes):
+#   docker-compose down -v
+#
+# Eliminar imágenes también:
+#   docker-compose down -v --rmi all
+#
+# ==============================================================================

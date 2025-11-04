@@ -1,0 +1,55 @@
+# ==============================================================================
+# Dockerfile para Apache HTTP Server
+# ==============================================================================
+# Imagen: httpd:2.4
+# Función: Actuar como reverse proxy hacia Tomcat usando mod_proxy_ajp
+# Puerto expuesto: 80
+# ==============================================================================
+
+FROM httpd:2.4
+
+# Etiquetas de metadata
+LABEL maintainer="admin@example.com"
+LABEL description="Apache HTTP Server configurado como reverse proxy para Tomcat"
+LABEL version="1.0"
+
+# Instalar herramientas necesarias (opcional - comentado por problemas de conexión)
+# RUN apt-get update && \
+#     apt-get install -y \
+#     curl \
+#     && rm -rf /var/lib/apt/lists/*
+
+# Habilitar módulos necesarios para proxy
+# mod_proxy: Módulo base para funcionalidad de proxy
+# mod_proxy_ajp: Soporte para protocolo AJP (Apache JServ Protocol)
+# mod_proxy_http: Soporte para proxy HTTP (por si se necesita)
+# mod_proxy_balancer: Para balanceo de carga (opcional)
+# mod_rewrite: Para reglas de reescritura de URL
+RUN sed -i \
+    -e 's/^#\(LoadModule proxy_module .*\)/\1/' \
+    -e 's/^#\(LoadModule proxy_ajp_module .*\)/\1/' \
+    -e 's/^#\(LoadModule proxy_http_module .*\)/\1/' \
+    -e 's/^#\(LoadModule proxy_balancer_module .*\)/\1/' \
+    -e 's/^#\(LoadModule slotmem_shm_module .*\)/\1/' \
+    -e 's/^#\(LoadModule rewrite_module .*\)/\1/' \
+    /usr/local/apache2/conf/httpd.conf
+
+# Copiar configuración personalizada de Apache
+COPY apache-config/httpd-vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf
+
+# Habilitar la inclusión de configuración de virtual hosts
+RUN sed -i \
+    -e 's/^#\(Include conf\/extra\/httpd-vhosts.conf\)/\1/' \
+    /usr/local/apache2/conf/httpd.conf
+
+# Crear directorio para logs personalizados
+RUN mkdir -p /usr/local/apache2/logs
+
+# Exponer puerto 80 para tráfico HTTP
+EXPOSE 80
+
+# Verificar la sintaxis de configuración antes de iniciar
+RUN httpd -t
+
+# Comando por defecto: iniciar Apache en primer plano
+CMD ["httpd-foreground"]
