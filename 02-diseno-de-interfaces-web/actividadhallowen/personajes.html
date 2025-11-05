@@ -3,55 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Personajes principales de The Nightmare Before Christmas">
+    <meta name="description" content="Personajes de The Nightmare Before Christmas">
     <title>Personajes - The Nightmare Before Christmas</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-    <!-- Skip link -->
-    <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
+    <a href="#contenido-principal" class="skip-link">Saltar al contenido</a>
 
-    <header role="banner">
+    <header>
         <div class="container">
-            <h1>🎃 The Nightmare Before Christmas 🎄</h1>
-            <p class="subtitle">Un proyecto accesible sobre la película de Tim Burton</p>
+            <h1>The Nightmare Before Christmas</h1>
+            <p class="subtitle">Pelicula de Tim Burton</p>
         </div>
     </header>
 
-    <nav role="navigation" aria-label="Navegación principal">
+    <nav>
         <div class="container">
             <ul class="nav-menu">
                 <li><a href="index.html">Inicio</a></li>
-                <li><a href="personajes.html" class="active" aria-current="page">Personajes</a></li>
-                <li><a href="pelicula.html">La Película</a></li>
+                <li><a href="personajes.html" class="active">Personajes</a></li>
+                <li><a href="pelicula.html">La Pelicula</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
             </ul>
 
-            <div class="accessibility-controls" role="toolbar" aria-label="Controles de accesibilidad">
-                <button id="btn-tema" aria-label="Cambiar tema claro/oscuro" title="Cambiar tema">
-                    🌙 Tema
+            <div class="accessibility-controls">
+                <button id="btn-tema" title="Cambiar tema">
+                    Tema
                 </button>
-                <button id="btn-fuente-mas" aria-label="Aumentar tamaño de fuente" title="Aumentar texto">
+                <button id="btn-fuente-mas" title="Aumentar texto">
                     A+
                 </button>
-                <button id="btn-fuente-menos" aria-label="Disminuir tamaño de fuente" title="Disminuir texto">
+                <button id="btn-fuente-menos" title="Reducir texto">
                     A-
                 </button>
             </div>
         </div>
     </nav>
 
-    <main id="contenido-principal" role="main">
+    <main id="contenido-principal">
         <div class="container">
-            <section aria-labelledby="titulo-personajes">
-                <h2 id="titulo-personajes">Los Personajes Principales</h2>
+            <section>
+                <h2>Personajes Principales</h2>
                 <p class="intro-text">
-                    Aquí tienes los personajes más importantes de la película. He puesto descripciones
-                    detalladas para que todos puedan "ver" a los personajes, aunque usen lectores de pantalla.
+                    Los personajes mas importantes de la pelicula.
                 </p>
 
-                <!-- Galería de personajes -->
-                <div class="characters-grid" role="list">
+                <div class="characters-grid">
+
+                    <article class="character-card">
+                        <div class="character-info">
+                            <h3>Jack Skellington</h3>
+                            <p><strong>El Rey de las Calabazas</strong></p>
+                            <p>
+                                Jack es el protagonista, un esqueleto alto que esta cansado de hacer 
+                                siempre lo mismo cada Halloween. Cuando descubre la Navidad, decide 
+                                hacerse cargo de ella el mismo.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="character-card">
+                        <div class="character-info">
+                            <h3>Sally</h3>
+                            <p><strong>La Muneca de Trapo</strong></p>
+                            <p>
+                                Sally es una muneca de trapo creada por el Dr. Finkelstein. Tiene el pelo rojo 
+                                y un vestido de retazos. Esta enamorada de Jack y es la unica que ve que 
+                                su plan va a salir mal.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="character-card">
+                        <div class="character-info">
+                            <h3>Oogie Boogie</h3>
+                            <p><strong>El Villano</strong></p>
+                            <p>
+                                Es el malo de la peli, un saco gigante lleno de bichos. Le encanta apostar 
+                                y jugar sucio. Odia a Jack.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="character-card">
+                        <div class="character-info">
+                            <h3>Zero</h3>
+                            <p><strong>El Perro Fantasma</strong></p>
+                            <p>
+                                Zero es el perro de Jack, un fantasma con forma de perro salchicha.
+                                Tiene una nariz de calabaza que brilla. Es muy leal a Jack.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="character-card">
+                        <div class="character-info">
+                            <h3>Dr. Finkelstein</h3>
+                            <p><strong>El Cientifico Loco</strong></p>
+                            <p>
+                                Es el creador de Sally. Va en silla de ruedas y puede abrir su cabeza.
+                                Es muy sobreprotector con Sally y no quiere que salga de casa.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="character-card">
+                        <div class="character-info">
+                            <h3>Lock, Shock y Barrel</h3>
+                            <p><strong>Los Ninos Traviesos</strong></p>
+                            <p>
+                                Este trio son los secuaces de Oogie Boogie. Lock lleva disfraz de
+                                diablo, Shock de bruja y Barrel de esqueleto. Jack les pide que traigan a
+                                Santa pero ellos lo llevan con Oogie Boogie.
+                            </p>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <section>
+                <h2>Otros Personajes</h2>
+                <p>
+                    Tambien estan el Alcalde que tiene dos caras, los musicos esqueleto, 
+                    brujas y mas criaturas que viven en Halloween Town.
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Proyecto de Diseno de Interfaces Web - 2 DAW</p>
+            <p>2025</p>
+        </div>
+    </footer>
+
+    <script src="js/accesibilidad.js"></script>
+</body>
+</html>
 
                     <!-- Jack Skellington -->
                     <article class="character-card" role="listitem">

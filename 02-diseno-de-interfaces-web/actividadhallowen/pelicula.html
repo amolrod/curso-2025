@@ -3,74 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Información sobre la película The Nightmare Before Christmas, su historia y vídeo">
-    <title>La Película - The Nightmare Before Christmas</title>
+    <meta name="description" content="Informacion sobre la pelicula The Nightmare Before Christmas">
+    <title>La Pelicula - The Nightmare Before Christmas</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-    <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
+    <a href="#contenido-principal" class="skip-link">Saltar al contenido</a>
 
-    <header role="banner">
+    <header>
         <div class="container">
-            <h1>🎃 The Nightmare Before Christmas 🎄</h1>
-            <p class="subtitle">Un proyecto accesible sobre la película de Tim Burton</p>
+            <h1>The Nightmare Before Christmas</h1>
+            <p class="subtitle">Pelicula de Tim Burton</p>
         </div>
     </header>
 
-    <nav role="navigation" aria-label="Navegación principal">
+    <nav>
         <div class="container">
             <ul class="nav-menu">
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="personajes.html">Personajes</a></li>
-                <li><a href="pelicula.html" class="active" aria-current="page">La Película</a></li>
+                <li><a href="pelicula.html" class="active">La Pelicula</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
             </ul>
 
-            <div class="accessibility-controls" role="toolbar" aria-label="Controles de accesibilidad">
-                <button id="btn-tema" aria-label="Cambiar tema claro/oscuro" title="Cambiar tema">
-                    🌙 Tema
+            <div class="accessibility-controls">
+                <button id="btn-tema" title="Cambiar tema">
+                    Tema
                 </button>
-                <button id="btn-fuente-mas" aria-label="Aumentar tamaño de fuente" title="Aumentar texto">
+                <button id="btn-fuente-mas" title="Aumentar texto">
                     A+
                 </button>
-                <button id="btn-fuente-menos" aria-label="Disminuir tamaño de fuente" title="Disminuir texto">
+                <button id="btn-fuente-menos" title="Reducir texto">
                     A-
                 </button>
             </div>
         </div>
     </nav>
 
-    <main id="contenido-principal" role="main">
+    <main id="contenido-principal">
         <div class="container">
 
-            <!-- Información de la película -->
-            <section aria-labelledby="titulo-info">
-                <h2 id="titulo-info">Sobre la Película</h2>
+            <section>
+                <h2>Datos de la Pelicula</h2>
 
                 <div class="movie-info-grid">
                     <article class="info-box">
-                        <h3>📅 Datos Técnicos</h3>
+                        <h3>Ficha Tecnica</h3>
                         <ul>
-                            <li><strong>Año:</strong> 1993</li>
+                            <li><strong>Ano:</strong> 1993</li>
                             <li><strong>Director:</strong> Henry Selick</li>
                             <li><strong>Historia:</strong> Tim Burton</li>
-                            <li><strong>Música:</strong> Danny Elfman</li>
-                            <li><strong>Duración:</strong> 76 minutos</li>
-                            <li><strong>Técnica:</strong> Stop-motion</li>
+                            <li><strong>Musica:</strong> Danny Elfman</li>
+                            <li><strong>Duracion:</strong> 76 minutos</li>
+                            <li><strong>Tecnica:</strong> Stop-motion</li>
                         </ul>
                     </article>
 
                     <article class="info-box">
-                        <h3>🏆 Reconocimientos</h3>
+                        <h3>Premios</h3>
                         <ul>
                             <li>Nominada al Oscar a Mejores Efectos Visuales</li>
-                            <li>Película de culto con millones de fans</li>
-                            <li>Reestreñada en 3D en 2006</li>
-                            <li>Merchandising que sigue vendiéndose hoy</li>
+                            <li>Pelicula de culto</li>
+                            <li>Reeestrenada en 3D en 2006</li>
                         </ul>
                     </article>
                 </div>
             </section>
+
+            <section class="story-section">
+                <h2>Resumen de la Historia</h2>
+
+                <div class="story-content">
+                    <h3>El Descubrimiento</h3>
+                    <p>
+                        Jack Skellington esta aburrido de hacer siempre lo mismo en Halloween. 
+                        Un dia descubre unas puertas magicas en el bosque y entra por la de Navidad. 
+                        Descubre un mundo lleno de colores y alegria.
+                    </p>
+
+                    <h3>El Plan</h3>
+                    <p>
+                        Jack vuelve a Halloween Town y decide que el hara la Navidad. Manda a los habitantes 
+                        a preparar regalos y envia a Lock, Shock y Barrel a traer a Santa Claus, pero 
+                        ellos lo llevan con Oogie Boogie.
+                    </p>
+
+                    <h3>La Noche de Navidad</h3>
+                    <p>
+                        Jack se disfraza de Santa y reparte regalos, pero son regalos de Halloween que 
+                        asustan a los ninos. La policia lo derriba del cielo.
+                    </p>
+
+                    <h3>El Final</h3>
+                    <p>
+                        Jack se da cuenta de que intento ser algo que no era. Rescata a Santa de Oogie Boogie 
+                        con ayuda de Sally y Santa arregla la Navidad. Jack y Sally acaban juntos.
+                    </p>
+                </div>
+            </section>
+
+            <section class="video-section">
+                <h2>Trailer de la Pelicula</h2>
+                <p>
+                    Aqui esta el trailer oficial de YouTube.
+                </p>
+
+                <div class="video-container">
+                    <iframe
+                        width="560"
+                        height="315"
+                        src="https://www.youtube.com/embed/wr6N_hZyBCk"
+                        title="Trailer de The Nightmare Before Christmas"
+                        frameborder="0"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </section>
+
+            <section>
+                <h2>Curiosidades</h2>
+                <ul class="trivia-list">
+                    <li>
+                        Tardaron 3 anos en hacer la pelicula moviendo munecos foto a foto.
+                    </li>
+                    <li>
+                        Tim Burton no dirigio la peli, fue Henry Selick. Burton estaba haciendo Batman Returns.
+                    </li>
+                    <li>
+                        Danny Elfman puso la voz cantada de Jack.
+                    </li>
+                    <li>
+                        Hicieron 400 cabezas diferentes de Jack para las expresiones.
+                    </li>
+                    <li>
+                        La peli se puede ver en Halloween o en Navidad.
+                    </li>
+                </ul>
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Proyecto de Diseno de Interfaces Web - 2 DAW</p>
+            <p>2025</p>
+        </div>
+    </footer>
+
+    <script src="js/accesibilidad.js"></script>
+</body>
+</html>
 
             <!-- Historia de la película -->
             <section class="story-section" aria-labelledby="titulo-historia">

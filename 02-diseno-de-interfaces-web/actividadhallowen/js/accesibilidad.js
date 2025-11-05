@@ -1,56 +1,109 @@
-/**
+// Script de accesibilidad - cambio de tema y tamaño de fuente/**
+
  * Script de accesibilidad para The Nightmare Before Christmas
- * Controla el cambio de tema y el tamaño de fuente
- * Proyecto de 2º DAW - Diseño de Interfaces Web
- */
 
-// Esperamos a que cargue el DOM antes de ejecutar nada
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() { * Controla el cambio de tema y el tamaño de fuente
 
-    // ===== VARIABLES =====
-    const btnTema = document.getElementById('btn-tema');
-    const btnFuenteMas = document.getElementById('btn-fuente-mas');
+    const btnTema = document.getElementById('btn-tema'); * Proyecto de 2º DAW - Diseño de Interfaces Web
+
+    const btnFuenteMas = document.getElementById('btn-fuente-mas'); */
+
     const btnFuenteMenos = document.getElementById('btn-fuente-menos');
 
-    // Tamaño de fuente por defecto
-    let tamanoFuente = 16;
+// Esperamos a que cargue el DOM antes de ejecutar nada
 
-    // ===== CARGAR PREFERENCIAS GUARDADAS =====
-    // Usamos localStorage para recordar las preferencias del usuario
-    cargarPreferencias();
+    let tamanoFuente = 16;document.addEventListener('DOMContentLoaded', function() {
 
 
-    // ===== CAMBIO DE TEMA CLARO/OSCURO =====
-    if (btnTema) {
-        btnTema.addEventListener('click', function() {
-            // Toggle: si tiene la clase la quitamos, si no la ponemos
-            document.body.classList.toggle('tema-claro');
 
-            // Cambiar el emoji del botón para que sea más visual
-            if (document.body.classList.contains('tema-claro')) {
-                btnTema.textContent = '☀️ Tema';
-                btnTema.setAttribute('aria-label', 'Cambiar a tema oscuro');
-            } else {
-                btnTema.textContent = '🌙 Tema';
-                btnTema.setAttribute('aria-label', 'Cambiar a tema claro');
-            }
+    // Cargar preferencias guardadas    // ===== VARIABLES =====
 
-            // Guardar la preferencia en localStorage
-            guardarTema();
-        });
+    const temaGuardado = localStorage.getItem('tema');    const btnTema = document.getElementById('btn-tema');
+
+    if (temaGuardado === 'claro') {    const btnFuenteMas = document.getElementById('btn-fuente-mas');
+
+        document.body.classList.add('tema-claro');    const btnFuenteMenos = document.getElementById('btn-fuente-menos');
+
     }
 
+    // Tamaño de fuente por defecto
 
-    // ===== AUMENTAR TAMAÑO DE FUENTE =====
-    if (btnFuenteMas) {
-        btnFuenteMas.addEventListener('click', function() {
-            // Limitar a 24px máximo para que no se vea raro
-            if (tamanoFuente < 24) {
-                tamanoFuente += 2;
-                aplicarTamanoFuente();
-                guardarTamanoFuente();
-            }
-        });
+    const tamanoGuardado = localStorage.getItem('tamanoFuente');    let tamanoFuente = 16;
+
+    if (tamanoGuardado) {
+
+        tamanoFuente = parseInt(tamanoGuardado);    // ===== CARGAR PREFERENCIAS GUARDADAS =====
+
+        document.documentElement.style.fontSize = tamanoFuente + 'px';    // Usamos localStorage para recordar las preferencias del usuario
+
+    }    cargarPreferencias();
+
+
+
+    // Cambiar tema
+
+    if (btnTema) {    // ===== CAMBIO DE TEMA CLARO/OSCURO =====
+
+        btnTema.addEventListener('click', function() {    if (btnTema) {
+
+            document.body.classList.toggle('tema-claro');        btnTema.addEventListener('click', function() {
+
+                        // Toggle: si tiene la clase la quitamos, si no la ponemos
+
+            const temaClaro = document.body.classList.contains('tema-claro');            document.body.classList.toggle('tema-claro');
+
+            localStorage.setItem('tema', temaClaro ? 'claro' : 'oscuro');
+
+        });            // Cambiar el emoji del botón para que sea más visual
+
+    }            if (document.body.classList.contains('tema-claro')) {
+
+                btnTema.textContent = '☀️ Tema';
+
+    // Aumentar fuente                btnTema.setAttribute('aria-label', 'Cambiar a tema oscuro');
+
+    if (btnFuenteMas) {            } else {
+
+        btnFuenteMas.addEventListener('click', function() {                btnTema.textContent = '🌙 Tema';
+
+            if (tamanoFuente < 24) {                btnTema.setAttribute('aria-label', 'Cambiar a tema claro');
+
+                tamanoFuente += 2;            }
+
+                document.documentElement.style.fontSize = tamanoFuente + 'px';
+
+                localStorage.setItem('tamanoFuente', tamanoFuente);            // Guardar la preferencia en localStorage
+
+            }            guardarTema();
+
+        });        });
+
+    }    }
+
+
+
+    // Disminuir fuente
+
+    if (btnFuenteMenos) {    // ===== AUMENTAR TAMAÑO DE FUENTE =====
+
+        btnFuenteMenos.addEventListener('click', function() {    if (btnFuenteMas) {
+
+            if (tamanoFuente > 12) {        btnFuenteMas.addEventListener('click', function() {
+
+                tamanoFuente -= 2;            // Limitar a 24px máximo para que no se vea raro
+
+                document.documentElement.style.fontSize = tamanoFuente + 'px';            if (tamanoFuente < 24) {
+
+                localStorage.setItem('tamanoFuente', tamanoFuente);                tamanoFuente += 2;
+
+            }                aplicarTamanoFuente();
+
+        });                guardarTamanoFuente();
+
+    }            }
+
+});        });
+
     }
 
 

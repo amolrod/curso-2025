@@ -1,85 +1,168 @@
-/**
+// Validacion del formulario de contacto/**
+
  * Script para validación del formulario de contacto
- * Incluye validación accesible con anuncios para lectores de pantalla
- * Proyecto de 2º DAW - Diseño de Interfaces Web
- */
+
+document.addEventListener('DOMContentLoaded', function() { * Incluye validación accesible con anuncios para lectores de pantalla
+
+    const formulario = document.getElementById('formulario-contacto'); * Proyecto de 2º DAW - Diseño de Interfaces Web
+
+     */
+
+    if (!formulario) return;
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    const formulario = document.getElementById('formulario-contacto');
-
-    // Solo ejecutar si estamos en la página de contacto
-    if (!formulario) return;
-
-    // Campos del formulario
     const campoNombre = document.getElementById('nombre');
-    const campoEmail = document.getElementById('email');
+
+    const campoEmail = document.getElementById('email');    const formulario = document.getElementById('formulario-contacto');
+
     const campoAsunto = document.getElementById('asunto');
-    const campoMensaje = document.getElementById('mensaje');
+
+    const campoMensaje = document.getElementById('mensaje');    // Solo ejecutar si estamos en la página de contacto
+
+    const campoPrivacidad = document.getElementById('privacidad');    if (!formulario) return;
+
+
+
+    // Validar al enviar    // Campos del formulario
+
+    formulario.addEventListener('submit', function(e) {    const campoNombre = document.getElementById('nombre');
+
+        e.preventDefault();    const campoEmail = document.getElementById('email');
+
+    const campoAsunto = document.getElementById('asunto');
+
+        let valido = true;    const campoMensaje = document.getElementById('mensaje');
+
     const campoPrivacidad = document.getElementById('privacidad');
 
+        // Validar nombre
 
-    // ===== VALIDACIÓN EN TIEMPO REAL =====
-    // Validar mientras el usuario escribe (cuando pierde el foco)
+        if (campoNombre.value.trim() === '') {
 
-    if (campoNombre) {
-        campoNombre.addEventListener('blur', function() {
-            validarNombre();
-        });
+            document.getElementById('nombre-error').textContent = 'El nombre es obligatorio';    // ===== VALIDACIÓN EN TIEMPO REAL =====
+
+            campoNombre.classList.add('error');    // Validar mientras el usuario escribe (cuando pierde el foco)
+
+            valido = false;
+
+        } else {    if (campoNombre) {
+
+            document.getElementById('nombre-error').textContent = '';        campoNombre.addEventListener('blur', function() {
+
+            campoNombre.classList.remove('error');            validarNombre();
+
+        }        });
+
     }
 
-    if (campoEmail) {
-        campoEmail.addEventListener('blur', function() {
-            validarEmail();
-        });
-    }
+        // Validar email
 
-    if (campoAsunto) {
-        campoAsunto.addEventListener('blur', function() {
-            validarAsunto();
-        });
-    }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;    if (campoEmail) {
 
-    if (campoMensaje) {
+        if (campoEmail.value.trim() === '') {        campoEmail.addEventListener('blur', function() {
+
+            document.getElementById('email-error').textContent = 'El email es obligatorio';            validarEmail();
+
+            campoEmail.classList.add('error');        });
+
+            valido = false;    }
+
+        } else if (!emailRegex.test(campoEmail.value)) {
+
+            document.getElementById('email-error').textContent = 'Email no valido';    if (campoAsunto) {
+
+            campoEmail.classList.add('error');        campoAsunto.addEventListener('blur', function() {
+
+            valido = false;            validarAsunto();
+
+        } else {        });
+
+            document.getElementById('email-error').textContent = '';    }
+
+            campoEmail.classList.remove('error');
+
+        }    if (campoMensaje) {
+
         campoMensaje.addEventListener('blur', function() {
-            validarMensaje();
-        });
-    }
 
+        // Validar asunto            validarMensaje();
 
-    // ===== ENVÍO DEL FORMULARIO =====
-    formulario.addEventListener('submit', function(e) {
-        e.preventDefault(); // Evitar que se envíe de verdad
+        if (campoAsunto.value === '') {        });
+
+            document.getElementById('asunto-error').textContent = 'Selecciona un asunto';    }
+
+            campoAsunto.classList.add('error');
+
+            valido = false;
+
+        } else {    // ===== ENVÍO DEL FORMULARIO =====
+
+            document.getElementById('asunto-error').textContent = '';    formulario.addEventListener('submit', function(e) {
+
+            campoAsunto.classList.remove('error');        e.preventDefault(); // Evitar que se envíe de verdad
+
+        }
 
         // Validar todos los campos
-        const nombreValido = validarNombre();
-        const emailValido = validarEmail();
-        const asuntoValido = validarAsunto();
-        const mensajeValido = validarMensaje();
-        const privacidadValida = validarPrivacidad();
 
-        // Si todo es válido, "enviar" el formulario
-        if (nombreValido && emailValido && asuntoValido && mensajeValido && privacidadValida) {
-            mostrarExito();
-            formulario.reset();
+        // Validar mensaje        const nombreValido = validarNombre();
+
+        if (campoMensaje.value.trim().length < 10) {        const emailValido = validarEmail();
+
+            document.getElementById('mensaje-error').textContent = 'El mensaje debe tener al menos 10 caracteres';        const asuntoValido = validarAsunto();
+
+            campoMensaje.classList.add('error');        const mensajeValido = validarMensaje();
+
+            valido = false;        const privacidadValida = validarPrivacidad();
+
         } else {
-            // Si hay errores, hacer foco en el primer campo con error
-            const primerError = formulario.querySelector('.error');
-            if (primerError) {
-                primerError.focus();
-            }
-        }
+
+            document.getElementById('mensaje-error').textContent = '';        // Si todo es válido, "enviar" el formulario
+
+            campoMensaje.classList.remove('error');        if (nombreValido && emailValido && asuntoValido && mensajeValido && privacidadValida) {
+
+        }            mostrarExito();
+
+            formulario.reset();
+
+        // Validar privacidad        } else {
+
+        if (!campoPrivacidad.checked) {            // Si hay errores, hacer foco en el primer campo con error
+
+            document.getElementById('privacidad-error').textContent = 'Debes aceptar la politica de privacidad';            const primerError = formulario.querySelector('.error');
+
+            valido = false;            if (primerError) {
+
+        } else {                primerError.focus();
+
+            document.getElementById('privacidad-error').textContent = '';            }
+
+        }        }
+
     });
 
+        // Si todo es valido, mostrar mensaje de exito
 
-    // ===== FUNCIONES DE VALIDACIÓN =====
+        if (valido) {
 
-    /**
-     * Validar campo nombre
-     */
-    function validarNombre() {
-        const valor = campoNombre.value.trim();
-        const errorSpan = document.getElementById('nombre-error');
+            document.getElementById('mensaje-confirmacion').hidden = false;    // ===== FUNCIONES DE VALIDACIÓN =====
+
+            formulario.reset();
+
+                /**
+
+            setTimeout(function() {     * Validar campo nombre
+
+                document.getElementById('mensaje-confirmacion').hidden = true;     */
+
+            }, 5000);    function validarNombre() {
+
+        }        const valor = campoNombre.value.trim();
+
+    });        const errorSpan = document.getElementById('nombre-error');
+
+});
 
         if (valor === '') {
             mostrarError(campoNombre, errorSpan, 'Por favor, introduce tu nombre');

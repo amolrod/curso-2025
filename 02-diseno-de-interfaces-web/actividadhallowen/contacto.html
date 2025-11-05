@@ -3,62 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Formulario de contacto accesible para The Nightmare Before Christmas">
+    <meta name="description" content="Formulario de contacto">
     <title>Contacto - The Nightmare Before Christmas</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-    <a href="#contenido-principal" class="skip-link">Saltar al contenido principal</a>
+    <a href="#contenido-principal" class="skip-link">Saltar al contenido</a>
 
-    <header role="banner">
+    <header>
         <div class="container">
-            <h1>🎃 The Nightmare Before Christmas 🎄</h1>
-            <p class="subtitle">Un proyecto accesible sobre la película de Tim Burton</p>
+            <h1>The Nightmare Before Christmas</h1>
+            <p class="subtitle">Pelicula de Tim Burton</p>
         </div>
     </header>
 
-    <nav role="navigation" aria-label="Navegación principal">
+    <nav>
         <div class="container">
             <ul class="nav-menu">
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="personajes.html">Personajes</a></li>
-                <li><a href="pelicula.html">La Película</a></li>
-                <li><a href="contacto.html" class="active" aria-current="page">Contacto</a></li>
+                <li><a href="pelicula.html">La Pelicula</a></li>
+                <li><a href="contacto.html" class="active">Contacto</a></li>
             </ul>
 
-            <div class="accessibility-controls" role="toolbar" aria-label="Controles de accesibilidad">
-                <button id="btn-tema" aria-label="Cambiar tema claro/oscuro" title="Cambiar tema">
-                    🌙 Tema
+            <div class="accessibility-controls">
+                <button id="btn-tema" title="Cambiar tema">
+                    Tema
                 </button>
-                <button id="btn-fuente-mas" aria-label="Aumentar tamaño de fuente" title="Aumentar texto">
+                <button id="btn-fuente-mas" title="Aumentar texto">
                     A+
                 </button>
-                <button id="btn-fuente-menos" aria-label="Disminuir tamaño de fuente" title="Disminuir texto">
+                <button id="btn-fuente-menos" title="Reducir texto">
                     A-
                 </button>
             </div>
         </div>
     </nav>
 
-    <main id="contenido-principal" role="main">
+    <main id="contenido-principal">
         <div class="container">
 
-            <section aria-labelledby="titulo-contacto">
-                <h2 id="titulo-contacto">Contáctame</h2>
+            <section>
+                <h2>Contacto</h2>
                 <p class="intro-text">
-                    Si tienes alguna sugerencia, has encontrado algún problema de accesibilidad,
-                    o simplemente quieres hablar sobre la película, rellena el formulario.
-                    He intentado hacerlo lo más accesible posible siguiendo lo que aprendimos en clase.
+                    Si quieres hacer alguna sugerencia o has encontrado algun problema, rellena el formulario.
                 </p>
 
-                <!-- El formulario con todas las medidas de accesibilidad -->
-                <form
-                    id="formulario-contacto"
-                    class="contact-form"
-                    action="#"
-                    method="post"
-                    novalidate
-                    aria-label="Formulario de contacto">
+                <form id="formulario-contacto" class="contact-form" action="#" method="post">
+
+                    <div class="form-group">
+                        <label for="nombre">
+                            Nombre <span class="required">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="nombre"
+                            name="nombre"
+                            required>
+                        <span id="nombre-error" class="error-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">
+                            Email <span class="required">*</span>
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required>
+                        <span id="email-error" class="error-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="asunto">
+                            Asunto <span class="required">*</span>
+                        </label>
+                        <select id="asunto" name="asunto" required>
+                            <option value="">-- Selecciona --</option>
+                            <option value="sugerencia">Sugerencia</option>
+                            <option value="accesibilidad">Problema de accesibilidad</option>
+                            <option value="contenido">Sobre el contenido</option>
+                            <option value="pelicula">Hablar de la peli</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                        <span id="asunto-error" class="error-message"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mensaje">
+                            Mensaje <span class="required">*</span>
+                        </label>
+                        <textarea
+                            id="mensaje"
+                            name="mensaje"
+                            rows="6"
+                            required
+                            minlength="10"
+                            maxlength="500"></textarea>
+                        <small>Minimo 10 caracteres, maximo 500</small>
+                        <span id="mensaje-error" class="error-message"></span>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="privacidad" name="privacidad" required>
+                        <label for="privacidad">
+                            Acepto la politica de privacidad <span class="required">*</span>
+                        </label>
+                        <span id="privacidad-error" class="error-message"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn">
+                            Enviar
+                        </button>
+                        <button type="reset" class="btn">
+                            Limpiar
+                        </button>
+                    </div>
+
+                    <div id="mensaje-confirmacion" class="success-message" hidden>
+                        <p><strong>Mensaje enviado</strong></p>
+                        <p>Gracias por contactar.</p>
+                    </div>
+
+                </form>
+
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Proyecto de Diseno de Interfaces Web - 2 DAW</p>
+            <p>2025</p>
+        </div>
+    </footer>
+
+    <script src="js/accesibilidad.js"></script>
+    <script src="js/formulario.js"></script>
+</body>
+</html>
 
                     <!-- Nombre -->
                     <div class="form-group">
