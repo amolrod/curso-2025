@@ -1,0 +1,340 @@
+/* reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #1a1a1a;
+    background: #f5f5f5;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* link para saltar al contenido - solo se ve al hacer foco */
+.saltar-nav {
+    position: absolute;
+    left: -9999px;
+    background: #2c1810;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.saltar-nav:focus {
+    left: 10px;
+    z-index: 1000;
+}
+
+/* cabecera y pie comparten estilos */
+header, footer {
+    background: #2c1810;
+    color: #fff;
+    padding: 30px 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.1rem;
+    color: #d4d4d4;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+}
+
+/* menú de navegación */
+nav {
+    background: #4a2c1a;
+    padding: 15px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+nav a {
+    display: block;
+    padding: 12px 20px;
+    background: #6b4423;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+/* hover, focus y página actual con el mismo estilo */
+nav a:hover, nav a:focus, nav a[aria-current="page"] {
+    background: #8b5a2b;
+}
+
+/* contenido principal */
+main {
+    background: #fff;
+    padding: 30px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #2c1810;
+    border-bottom: 3px solid #2c1810;
+    padding-bottom: 10px;
+}
+
+h3 {
+    font-size: 1.4rem;
+    margin: 25px 0 15px;
+    color: #4a2c1a;
+}
+
+h4 {
+    font-size: 1.2rem;
+    margin: 15px 0 10px;
+    color: #4a2c1a;
+}
+
+p, ul, ol {
+    margin-bottom: 15px;
+}
+
+ul, ol {
+    margin-left: 25px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+figcaption {
+    margin-top: 10px;
+    font-style: italic;
+    color: #666;
+}
+
+/* listas de pelis y elementos destacados */
+.lista-peliculas {
+    list-style: none;
+    margin-left: 0;
+}
+
+.lista-peliculas li {
+    padding: 15px;
+    background: #f9f9f9;
+    margin-bottom: 15px;
+    border-left: 4px solid #4a2c1a;
+}
+
+.lista-peliculas strong {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #2c1810;
+}
+
+.pelicula-destacada, .video-descripcion {
+    background: #f9f9f9;
+    padding: 20px;
+    border-left: 5px solid #4a2c1a;
+    margin-top: 20px;
+}
+
+.video-descripcion {
+    border: 2px solid #4a2c1a;
+    border-radius: 5px;
+}
+
+/* botones generales y primarios */
+.boton, .boton-primario {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #4a2c1a;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.boton:hover, .boton:focus {
+    background: #6b4423;
+}
+
+.boton-secundario {
+    background: #999;
+}
+
+.boton-secundario:hover, .boton-secundario:focus {
+    background: #777;
+}
+
+/* formularios y campos */
+form {
+    max-width: 700px;
+}
+
+.campo-formulario, .campo-radio {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #2c1810;
+}
+
+input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+    font-family: Arial, sans-serif;
+}
+
+/* efecto de foco en inputs */
+input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+    border-color: #4a2c1a;
+    box-shadow: 0 0 0 3px rgba(74, 44, 26, 0.2);
+}
+
+.ayuda {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+
+fieldset {
+    border: 2px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 3px;
+}
+
+legend {
+    font-weight: bold;
+    padding: 0 10px;
+    color: #2c1810;
+}
+
+/* labels de radio y checkbox en línea */
+.campo-radio label, input[type="checkbox"] + label {
+    display: inline;
+    font-weight: normal;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.botones-formulario {
+    margin-top: 25px;
+    display: flex;
+    gap: 10px;
+}
+
+/* listas de definición */
+dt {
+    font-weight: bold;
+    margin-top: 10px;
+    color: #2c1810;
+}
+
+dd {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+/* foco visible para accesibilidad */
+*:focus {
+    outline: 3px solid #4a2c1a;
+    outline-offset: 2px;
+}
+
+/* adaptar a móviles */
+@media (max-width: 768px) {
+    body {
+        font-size: 1rem;
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    nav ul {
+        flex-direction: column;
+    }
+    
+    main {
+        padding: 20px;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    h3 {
+        font-size: 1.2rem;
+    }
+    
+    .botones-formulario {
+        flex-direction: column;
+    }
+}
+
+/* alto contraste para accesibilidad */
+@media (prefers-contrast: high) {
+    body {
+        background: #fff;
+        color: #000;
+    }
+    
+    header, nav, footer {
+        background: #000;
+        color: #fff;
+    }
+    
+    nav a {
+        background: #333;
+        border: 2px solid #fff;
+    }
+}
+
+/* reducir animaciones si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Formulario de contacto para enviar sugerencias sobre peliculas de terror">
+    <title>Contacto - Peliculas de Terror Clasicas</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <a href="#contenido-principal" class="saltar-nav">Saltar al contenido principal</a>
+    
+    <header role="banner">
+        <h1>Peliculas de Terror Clasicas</h1>
+        <p>Las mejores peliculas de terror de todos los tiempos</p>
+    </header>
+
+    <nav role="navigation" aria-label="Navegacion principal">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catalogo</a></li>
+            <li><a href="pelicula.html">Pelicula destacada</a></li>
+            <li><a href="contacto.html" aria-current="page">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <main id="contenido-principal" role="main">
+        <h2>Contacto</h2>
+        
+        <p>Si tienes alguna sugerencia de pelicula que deberia estar en nuestro catalogo, o quieres enviarnos tus comentarios, utiliza el siguiente formulario.</p>
+
+        <form action="#" method="post" aria-labelledby="titulo-formulario">
+            <h3 id="titulo-formulario">Formulario de contacto</h3>
+            
+            <div class="campo-formulario">
+                <label for="nombre">Nombre completo:</label>
+                <input type="text" id="nombre" name="nombre" required aria-required="true">
+            </div>
+
+            <div class="campo-formulario">
+                <label for="email">Correo electronico:</label>
+                <input type="email" id="email" name="email" required aria-required="true" aria-describedby="ayuda-email">
+                <span id="ayuda-email" class="ayuda">Necesitamos tu email para poder responderte</span>
+            </div>
+
+            <fieldset>
+                <legend>Motivo del contacto:</legend>
+                <div class="campo-radio">
+                    <input type="radio" id="sugerencia" name="motivo" value="sugerencia" checked>
+                    <label for="sugerencia">Sugerencia de pelicula</label>
+                </div>
+                <div class="campo-radio">
+                    <input type="radio" id="comentario" name="motivo" value="comentario">
+                    <label for="comentario">Comentario general</label>
+                </div>
+                <div class="campo-radio">
+                    <input type="radio" id="error" name="motivo" value="error">
+                    <label for="error">Reportar un error</label>
+                </div>
+            </fieldset>
+
+            <div class="campo-formulario">
+                <label for="mensaje">Mensaje:</label>
+                <textarea id="mensaje" name="mensaje" rows="6" required aria-required="true" aria-describedby="ayuda-mensaje"></textarea>
+                <span id="ayuda-mensaje" class="ayuda">Cuentanos tu sugerencia o comentario</span>
+            </div>
+
+            <div class="campo-formulario">
+                <input type="checkbox" id="acepto" name="acepto" required aria-required="true">
+                <label for="acepto">Acepto que mis datos sean utilizados para responder a mi consulta</label>
+            </div>
+
+            <div class="botones-formulario">
+                <button type="submit" class="boton boton-primario">Enviar mensaje</button>
+                <button type="reset" class="boton boton-secundario">Limpiar formulario</button>
+            </div>
+        </form>
+    </main>
+
+    <footer role="contentinfo">
+        <p>Proyecto educativo sobre accesibilidad web</p>
+        <p>Creado para la asignatura de Diseno de Interfaces Web</p>
+    </footer>
+
+    <script src="js/validacion.js"></script>
+</body>
+</html>
