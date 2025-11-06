@@ -98,18 +98,17 @@ const repo = Biblioteca.getInstance();
 
 // datos de ejemplo para probar rápidamente
 function precargar() {
-  // todos libros de desarrollo personal para probar estadísticas
+  // mantenemos variedad para probar estadísticas
   const seed = [
-    { titulo: 'Can’t Hurt Me', autor: 'David Goggins', anioPublicacion: 2018, genero: 'desarrollo personal', isbn: '9781544512280' },
-    { titulo: 'Atomic Habits', autor: 'James Clear', anioPublicacion: 2018, genero: 'desarrollo personal', isbn: '9780735211292' },
     { titulo: 'The Subtle Art of Not Giving a F*ck', autor: 'Mark Manson', anioPublicacion: 2016, genero: 'desarrollo personal', isbn: '9780062457714' },
-    { titulo: 'Ego Is the Enemy', autor: 'Ryan Holiday', anioPublicacion: 2016, genero: 'desarrollo personal', isbn: '9781591847816' },
-    { titulo: 'You Are a Badass', autor: 'Jen Sincero', anioPublicacion: 2013, genero: 'desarrollo personal', isbn: '9780762447695' },
-    { titulo: 'The Mountain Is You', autor: 'Brianna Wiest', anioPublicacion: 2020, genero: 'desarrollo personal', isbn: '9781949759228' },
-    { titulo: 'Can’t Hurt Me: Clean Edition', autor: 'David Goggins', anioPublicacion: 2021, genero: 'desarrollo personal', isbn: '9781544534077' }
+    { titulo: 'Normal Sucks', autor: 'Jonathan Mooney', anioPublicacion: 2019, genero: 'ensayo', isbn: '9781250227307' },
+    { titulo: 'Don Quijote de la Mancha', autor: 'Miguel de Cervantes Saavedra', anioPublicacion: 1605, genero: 'novela clásica', isbn: '9788491050293' },
+    { titulo: 'La madurez: La responsabilidad de ser uno mismo', autor: 'Osho', anioPublicacion: 2005, genero: 'filosofía', isbn: '9788484450981' },
+    { titulo: 'Así es la puta vida', autor: 'Manuel Jabois', anioPublicacion: 2023, genero: 'ensayo / realismo', isbn: '9788420476068' }
   ];
   seed.forEach(d => repo.agregarLibro(new Libro(d)));
 }
+
 
 
 // render del listado
