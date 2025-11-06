@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gestor de Biblioteca</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>gestor de biblioteca</h1>
+
+    <!-- formulario de alta de libro -->
+    <section class="card">
+      <h2>nuevo libro</h2>
+      <form id="form-alta" novalidate>
+        <div class="grid">
+          <label>
+            título
+            <input name="titulo" id="titulo" required />
+          </label>
+          <label>
+            autor
+            <input name="autor" id="autor" required />
+          </label>
+          <label>
+            año publicación
+            <input name="anio" id="anio" type="number" min="0" max="9999" required />
+          </label>
+          <label>
+            género
+            <input name="genero" id="genero" required />
+          </label>
+          <label>
+            isbn
+            <input name="isbn" id="isbn" required />
+          </label>
+        </div>
+        <button type="submit">añadir</button>
+        <p class="msg" id="msg-alta" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <!-- buscador -->
+    <section class="card">
+      <h2>buscar</h2>
+      <form id="form-buscar">
+        <div class="grid">
+          <label>
+            por título
+            <input id="qTitulo" placeholder="parte del título" />
+          </label>
+          <label>
+            por isbn
+            <input id="qIsbn" placeholder="isbn exacto" />
+          </label>
+        </div>
+        <button type="submit">buscar</button>
+        <button type="button" id="btn-limpiar">limpiar</button>
+      </form>
+    </section>
+
+    <!-- listado -->
+    <section class="card">
+      <h2>listado</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>título</th>
+            <th>autor</th>
+            <th>año</th>
+            <th>género</th>
+            <th>isbn</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </section>
+
+    <!-- estadísticas -->
+    <section class="card">
+      <h2>estadísticas</h2>
+      <div id="estadisticas">
+        <p><strong>media de antigüedad:</strong> <span id="mediaAntiguedad">0</span> años</p>
+        <div>
+          <strong>libros por género:</strong>
+          <ul id="porGenero"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
