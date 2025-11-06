@@ -98,16 +98,19 @@ const repo = Biblioteca.getInstance();
 
 // datos de ejemplo para probar rápidamente
 function precargar() {
-  // mantenemos variedad para probar estadísticas
+  // todos libros de desarrollo personal para probar estadísticas
   const seed = [
+    { titulo: 'Can’t Hurt Me', autor: 'David Goggins', anioPublicacion: 2018, genero: 'desarrollo personal', isbn: '9781544512280' },
+    { titulo: 'Atomic Habits', autor: 'James Clear', anioPublicacion: 2018, genero: 'desarrollo personal', isbn: '9780735211292' },
     { titulo: 'The Subtle Art of Not Giving a F*ck', autor: 'Mark Manson', anioPublicacion: 2016, genero: 'desarrollo personal', isbn: '9780062457714' },
-    { titulo: 'Normal Sucks', autor: 'Jonathan Mooney', anioPublicacion: 2019, genero: 'ensayo', isbn: '9781250227307' },
-    { titulo: 'Clean Code', autor: 'Robert C. Martin', anioPublicacion: 2008, genero: 'programación', isbn: '9780132350884' },
-    { titulo: 'El nombre del viento', autor: 'Patrick Rothfuss', anioPublicacion: 2007, genero: 'fantasía', isbn: '9788401352836' },
-    { titulo: 'Rebel Ideas', autor: 'Matthew Syed', anioPublicacion: 2019, genero: 'ensayo', isbn: '9781473614953' }
+    { titulo: 'Ego Is the Enemy', autor: 'Ryan Holiday', anioPublicacion: 2016, genero: 'desarrollo personal', isbn: '9781591847816' },
+    { titulo: 'You Are a Badass', autor: 'Jen Sincero', anioPublicacion: 2013, genero: 'desarrollo personal', isbn: '9780762447695' },
+    { titulo: 'The Mountain Is You', autor: 'Brianna Wiest', anioPublicacion: 2020, genero: 'desarrollo personal', isbn: '9781949759228' },
+    { titulo: 'Can’t Hurt Me: Clean Edition', autor: 'David Goggins', anioPublicacion: 2021, genero: 'desarrollo personal', isbn: '9781544534077' }
   ];
   seed.forEach(d => repo.agregarLibro(new Libro(d)));
 }
+
 
 // render del listado
 function renderLista(libros) {
